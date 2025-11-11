@@ -1,8 +1,7 @@
 import java.awt.CardLayout;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import systemgui.SalesManLogIn;
+import javax.swing.*;
+import systemgui.ControlPanel;
+import systemgui.LogIn;
 
 public class View extends JFrame {
 
@@ -21,11 +20,17 @@ public class View extends JFrame {
             superMainPanel = new JPanel(superMainLayout);
 
             // Sales Man Login
-            SalesManLogIn salesManLogIn = new SalesManLogIn();
+            LogIn salesManLogIn = new LogIn();
             superMainPanel.add(salesManLogIn, "SalesManLogIn");
 
-            add(superMainPanel);
+            // Login Btn
+            LogIn.getLoginBtn().addActionListener(event -> {
+                ControlPanel controlPanel = new ControlPanel();
+                superMainPanel.add(controlPanel,"ControlPanel");
+                superMainLayout.show(superMainPanel, "ControlPanel");
+            });
 
+            add(superMainPanel);
             setSize(1366,768);
             setTitle("POS System");
             setResizable(false);
