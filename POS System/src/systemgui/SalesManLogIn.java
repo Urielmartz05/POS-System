@@ -1,6 +1,9 @@
 package systemgui;
 
+import org.w3c.dom.Text;
+
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
@@ -76,12 +79,19 @@ public class SalesManLogIn extends JPanel{
         emailInput.setMaximumSize(new Dimension(300,30));
         logPanel.add(emailInput);
 
+        //Email Input TextField Placeholder
+        TextPrompt EmailPlaceholder = new TextPrompt("Email",emailInput);
+
+
         logPanel.add(Box.createVerticalStrut(20));
 
         // Password Input TextField
         JTextField passwordInput = new JTextField();
         passwordInput.setMaximumSize(new Dimension(300,30));
         logPanel.add(passwordInput);
+
+        // Pasword Input TextField Placeholder
+        TextPrompt PasswordPlaceholder= new TextPrompt("Password", passwordInput);
 
         logPanel.add(Box.createVerticalStrut(30));
 
