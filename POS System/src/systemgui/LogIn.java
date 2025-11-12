@@ -1,9 +1,9 @@
 package systemgui;
 
+import GUIHelpers.TextPrompt;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
-
 public class LogIn extends JPanel{
 
     public static JButton loginBtn;
@@ -77,15 +77,16 @@ public class LogIn extends JPanel{
         JTextField emailInput = new JTextField();
         emailInput.setMaximumSize(new Dimension(300,30));
         emailInput.setFont(emailInput.getFont().deriveFont(16f));
+        TextPrompt emailPlaceholder = new TextPrompt("Email",emailInput);
         logPanel.add(emailInput);
 
         logPanel.add(Box.createVerticalStrut(20));
 
         // Password Input TextField
-        JTextField passwordInput = new JTextField();
+        JPasswordField passwordInput = new JPasswordField();
         passwordInput.setMaximumSize(new Dimension(300,30));
+        TextPrompt passwordPlaceholder= new TextPrompt("Password", passwordInput);
         logPanel.add(passwordInput);
-
         logPanel.add(Box.createVerticalStrut(30));
 
         // Log In Button
@@ -101,6 +102,7 @@ public class LogIn extends JPanel{
         add(SalesManLogInMainPanel);
     }
 
+    // Login Btn Setter and Getter
     public static JButton getLoginBtn() {
         return loginBtn;
     }

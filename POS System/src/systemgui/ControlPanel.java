@@ -7,6 +7,8 @@ import logic.ControlPanelCreation;
 
 public class ControlPanel extends JPanel {
 
+    public static JPanel controlPanelMainPanel;
+
     public ControlPanel() {
         initComponents();
     }
@@ -16,7 +18,7 @@ public class ControlPanel extends JPanel {
         setLayout(new BorderLayout());
 
         // Control Panel Main Panel
-        JPanel controlPanelMainPanel = new JPanel();
+        controlPanelMainPanel = new JPanel();
         controlPanelMainPanel.setLayout(new BorderLayout());
 
         // Nav Bar Panel
@@ -71,14 +73,23 @@ public class ControlPanel extends JPanel {
         btnsContainer.setOpaque(false);
         centerPanel.add(btnsContainer, new GridBagConstraints());
 
-        // Buttons
+        // Generate Admin Control Panel
         ControlPanelCreation controlPanel = new ControlPanelCreation();
-        JButton[] btnArray = controlPanel.generatePanel();
+        JButton[] adminBtns = controlPanel.generateAdminPanel();
 
-        for (int i = 0; i < btnArray.length; i++) {
+        for (int i = 0; i < adminBtns.length; i++) {
 
-            btnsContainer.add(btnArray[i]);
+            btnsContainer.add(adminBtns[i]);
         }
+
+        // Generate Users Control Panel
+        // ControlPanelCreation controlPanel = new ControlPanelCreation();
+        // JButton[] usersBtns = controlPanel.generateUserPanel();
+        
+        // for (int i = 0; i < usersBtns.length; i++) {
+        //     btnsContainer.add(usersBtns[i]);
+        // }
+
         
 
         add(controlPanelMainPanel);
