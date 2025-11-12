@@ -4,9 +4,11 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
-public class SalesManLogIn extends JPanel{
+public class LogIn extends JPanel{
 
-    public SalesManLogIn(){
+    public static JButton loginBtn;
+
+    public LogIn(){
         initComponents();
     }
 
@@ -74,6 +76,7 @@ public class SalesManLogIn extends JPanel{
         // Email Input TextField
         JTextField emailInput = new JTextField();
         emailInput.setMaximumSize(new Dimension(300,30));
+        emailInput.setFont(emailInput.getFont().deriveFont(16f));
         logPanel.add(emailInput);
 
         logPanel.add(Box.createVerticalStrut(20));
@@ -86,7 +89,7 @@ public class SalesManLogIn extends JPanel{
         logPanel.add(Box.createVerticalStrut(30));
 
         // Log In Button
-        JButton loginBtn = new JButton("Log In");
+        loginBtn = new JButton("Log In");
         loginBtn.setFont(loginBtn.getFont().deriveFont(18f));
         loginBtn.setBackground(new Color(0xD52D5D));
         loginBtn.setFocusPainted(false);
@@ -97,5 +100,12 @@ public class SalesManLogIn extends JPanel{
 
         add(SalesManLogInMainPanel);
     }
-	
+
+    public static JButton getLoginBtn() {
+        return loginBtn;
+    }
+
+    public static void setLoginBtn(JButton loginBtn) {
+        LogIn.loginBtn = loginBtn;
+    }
 }
