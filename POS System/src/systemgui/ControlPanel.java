@@ -1,15 +1,33 @@
 package systemgui;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import logic.ControlPanelCreation;
+
+import Controller.Authentication;
+import Logic.ControlPanelCreation;
+import Model.Users;
 
 public class ControlPanel extends JPanel {
 
     public static JPanel controlPanelMainPanel;
+    public static int btnNumber;
+    public static boolean isInvalidUser = false;
+    private Users user;
 
-    public ControlPanel() {
+    public ControlPanel(Users user) {
+        this.user = user;
         initComponents();
     }
 
@@ -73,24 +91,32 @@ public class ControlPanel extends JPanel {
         btnsContainer.setOpaque(false);
         centerPanel.add(btnsContainer, new GridBagConstraints());
 
-        // Generate Admin Control Panel
-        ControlPanelCreation controlPanel = new ControlPanelCreation();
-        JButton[] adminBtns = controlPanel.generateAdminPanel();
+        // Generate Control Panel according to user role
+        String accessCode = LogIn.emailInput.getText();
+        String password = new String(LogIn.passwordInput.getPassword());
+        Users user = Authentication.userAuthentication(accessCode, password);
 
-        for (int i = 0; i < adminBtns.length; i++) {
+        // Generate Admin Panel
+        if (user.getRole().equals("Admin")) {
+            btnNumber = 4;
+            ControlPanelCreation controlPanel = new ControlPanelCreation();
+            JButton[] adminBtns = controlPanel.generateAdminPanel();
 
-            btnsContainer.add(adminBtns[i]);
+            for (int i = 0; i < adminBtns.length; i++) {
+                btnsContainer.add(adminBtns[i]);
+            }
         }
 
-        // Generate Users Control Panel
-        // ControlPanelCreation controlPanel = new ControlPanelCreation();
-        // JButton[] usersBtns = controlPanel.generateUserPanel();
-        
-        // for (int i = 0; i < usersBtns.length; i++) {
-        //     btnsContainer.add(usersBtns[i]);
-        // }
-
-        
+        // Generate User Panel
+        else if (user.getRole().equals("User")) {
+            btnNumber = 3;
+            ControlPanelCreation controlPanel = new ControlPanelCreation();
+            JButton[] usersBtns = controlPanel.generateUserPanel();
+            
+            for (int i = 0; i < usersBtns.length; i++) {
+                btnsContainer.add(usersBtns[i]);
+            }
+        }
 
         add(controlPanelMainPanel);
     }

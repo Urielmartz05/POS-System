@@ -1,0 +1,12 @@
+{
+  "789": {
+    "password": "nasa",
+    "name": "Juan",
+    "role": "User"
+  },
+  "12345": {
+    "password": "holaxd",
+    "name": "Pedro",
+    "role": "Admin"
+  }
+}
