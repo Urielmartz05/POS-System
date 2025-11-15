@@ -1,20 +1,22 @@
-package logic;
+package Logic;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Image;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
 import systemgui.ControlPanel;
 
 public class ControlPanelCreation {
 
-    public static int btnNumber = 4;
+    public static int btnNumber = ControlPanel.btnNumber;
     private JButton[] btnPanel;
 
 
