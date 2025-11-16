@@ -1,12 +1,38 @@
 package systemgui;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
 import GUIHelpers.TextPrompt;
-import java.awt.*;
-import javax.swing.*;
-import javax.swing.border.*;
 public class LogIn extends JPanel{
 
+    public static JTextField emailInput;
     public static JButton loginBtn;
+    public static JPasswordField passwordInput;
+    public static JLabel alertLabel;
+
+    public static String accessCode;
+    private static char[] pass;
+    public static String password;
+
+    public static boolean isLogInInValid;
+
 
     public LogIn(){
         initComponents();
@@ -74,16 +100,25 @@ public class LogIn extends JPanel{
         logPanel.add(Box.createVerticalStrut(40));
 
         // Email Input TextField
-        JTextField emailInput = new JTextField();
+        emailInput = new JTextField();
         emailInput.setMaximumSize(new Dimension(300,30));
         emailInput.setFont(emailInput.getFont().deriveFont(16f));
         TextPrompt emailPlaceholder = new TextPrompt("Email",emailInput);
         logPanel.add(emailInput);
 
-        logPanel.add(Box.createVerticalStrut(20));
+        logPanel.add(Box.createVerticalStrut(8));
+
+        // Show Alert
+        alertLabel = new JLabel("Email or password isn't valid!");
+        alertLabel.setForeground(Color.RED);
+        alertLabel.setAlignmentX(CENTER_ALIGNMENT);
+        alertLabel.setVisible(true);
+        logPanel.add(alertLabel);
+
+        logPanel.add(Box.createVerticalStrut(8));
 
         // Password Input TextField
-        JPasswordField passwordInput = new JPasswordField();
+        passwordInput = new JPasswordField();
         passwordInput.setMaximumSize(new Dimension(300,30));
         TextPrompt passwordPlaceholder= new TextPrompt("Password", passwordInput);
         logPanel.add(passwordInput);
