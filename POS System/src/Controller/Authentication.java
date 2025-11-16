@@ -1,7 +1,7 @@
 package Controller;
 
-import java.io.File;
-import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 
@@ -13,7 +13,6 @@ import Model.Users;
 
 public class Authentication {
 
-    private static final File file = new File("POS System/src/Data/data.json");
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     public static Users userAuthentication(String accessCode, String password){
@@ -21,7 +20,8 @@ public class Authentication {
         Users correctUser = null;
         HashMap<Integer, Users> registerList = new HashMap<>();
 
-        try (FileReader reader = new FileReader(file)) {
+        try (InputStream inputStream = Authentication.class.getResourceAsStream("/Data/data.json");
+             InputStreamReader reader = new InputStreamReader(inputStream)) {
             Type type = new TypeToken<HashMap<Integer, Users>>() {}.getType();
             registerList = gson.fromJson(reader, type);
 
