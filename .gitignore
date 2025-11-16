@@ -1,0 +1,11 @@
+# Maven
+/target/
+
+# Por si acaso
+*.class
+
+# Maven
+/target/
+
+# JAR generados
+*.jar
