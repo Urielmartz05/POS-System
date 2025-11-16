@@ -54,7 +54,7 @@ public class View extends JFrame {
                 }
 
                 else {
-                    LogIn.alertLabel.setVisible(false); // Ocultar si el login es exitoso
+                    LogIn.alertLabel.setVisible(false);
                     ControlPanel controlPanel = new ControlPanel(user);
                     superMainPanel.add(controlPanel, "ControlPanel");
                     superMainLayout.show(superMainPanel, "ControlPanel");
