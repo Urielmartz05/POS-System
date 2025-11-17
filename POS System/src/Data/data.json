@@ -1,17 +1,12 @@
 {
-  "789": {
-    "password": "nasa",
-    "name": "Juan",
-    "role": "User"
-  },
-  "12345": {
-    "password": "holaxd",
-    "name": "Pedro",
-    "role": "Admin"
-  },
   "1": {
     "password": ".",
     "name": "Scobby",
     "role": "Admin"
+  },
+  "789": {
+    "password": "nasa",
+    "name": "Juan",
+    "role": "User"
   }
 }

@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Writer;
 import java.lang.reflect.Type;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.HashMap;
 
 import com.google.gson.Gson;
@@ -28,7 +30,7 @@ public class AddUsers {
             usersList = gson.fromJson(reader, type);
             
         } catch (Exception e) {
-            e.getMessage();
+              e.printStackTrace();
         }
 
         // Get new User information
@@ -41,11 +43,16 @@ public class AddUsers {
         usersList.put(code, newUser);
 
         // Write new data in json archive
-        try (Writer writer = new FileWriter("/Data/data.json")) {
+        try {
+            URL resource = AddUsers.class.getResource("/Data/data.json");
+            String filePath = Paths.get(resource.toURI()).toString();
+            
+            Writer writer = new FileWriter(filePath);
             gson.toJson(usersList, writer);
+            writer.close();
             
         } catch (Exception e) {
-            e.getMessage();
+              e.printStackTrace();
         }
         
 

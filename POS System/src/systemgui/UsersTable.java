@@ -21,12 +21,17 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import GUIHelpers.TextPrompt;
 import Logic.UsersFileEditor;
 import Model.Users;
 
 public class UsersTable extends JPanel{
+
+    public static JTable table;
+    public static DefaultTableModel model;
+
 
     public UsersTable(){
         initComponents();
@@ -196,7 +201,8 @@ public class UsersTable extends JPanel{
             i++;
         }
 
-        JTable table = new JTable(data, columns);
+        model = new DefaultTableModel(data, columns);
+        table = new JTable(model);
         table.setFont(table.getFont().deriveFont(16f));
         table.getTableHeader().setFont(table.getTableHeader().getFont().deriveFont(18f));
         table.setRowHeight(30);

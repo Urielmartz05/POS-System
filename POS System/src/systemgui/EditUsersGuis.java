@@ -13,7 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
+import Controller.AddUsers;
 import GUIHelpers.TextPrompt;
 
 public class EditUsersGuis {
@@ -82,7 +84,29 @@ public class EditUsersGuis {
             JOptionPane.PLAIN_MESSAGE    
         );
 
-        
+        if (result == JOptionPane.OK_OPTION) {
+
+            String code = codeInput.getText();
+            String name = nameInput.getText();
+            String role = (String) roleBox.getSelectedItem();
+            String password = new String(passwordInput.getPassword());
+            
+            if (code.isEmpty() || name.isEmpty() || password.isEmpty()) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "All fields are required",
+                    "Validation error!",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+
+            else {
+                AddUsers.addNewUser();
+                UsersTable.model.addRow(new Object[]{ code, name, role, password });
+            }
+
+        }
+
     } 
  
 }
