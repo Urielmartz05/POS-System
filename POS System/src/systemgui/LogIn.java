@@ -49,7 +49,7 @@ public class LogIn extends JPanel{
         // NavBar Panel
         JPanel navBarPanel = new JPanel();
         navBarPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        navBarPanel.setMaximumSize(new Dimension(1080, 100));
+        navBarPanel.setMaximumSize(new Dimension(1366, 100));
         navBarPanel.setBorder(new EmptyBorder(20,20,20,0));
         navBarPanel.setBackground(new Color(0xD52D5D));
         SalesManLogInMainPanel.add(navBarPanel,BorderLayout.NORTH);
