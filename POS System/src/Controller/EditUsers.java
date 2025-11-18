@@ -65,10 +65,10 @@ public class EditUsers {
             DefaultTableModel model = (DefaultTableModel) UsersTable.table.getModel();
            
             // Begin of delete data from Json
-            int modelRow = UsersTable.table.convertRowIndexToModel(selectedRow);
-            int modelCol = UsersTable.table.convertColumnIndexToModel(selectedColumn);
+            int row = UsersTable.table.convertRowIndexToModel(selectedRow);
+            int column = UsersTable.table.convertColumnIndexToModel(selectedColumn);
 
-            int code = (int) model.getValueAt(modelRow, modelCol);
+            int code = Integer.parseInt(UsersTable.table.getValueAt(row, column).toString());
 
             // Read before delete data
             try (InputStream inputStream = EditUsers.class.getResourceAsStream("/Data/data.json")) {
