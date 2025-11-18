@@ -20,20 +20,13 @@ import systemgui.UsersTable;
 public class EditUsers {
 
     public static int selectedRow;
+    private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private static HashMap<Integer, Users> usersList;
 
     public static void addNewUser(){
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        HashMap<Integer, Users> usersList = new HashMap<>();
-
         // Read data before write to avoid delete data
-        try (InputStream inputStream = EditUsers.class.getResourceAsStream("/Data/data.json")) {
-            Type type = new TypeToken<HashMap<Integer, Users>>() {}.getType();
-            InputStreamReader reader = new InputStreamReader(inputStream);
-            usersList = gson.fromJson(reader, type);
-        } catch (Exception e) {
-              e.printStackTrace();
-        }
+        usersList = readUserHashMap();
 
         // Get new User information
         int code = Integer.parseInt(EditUsersGuis.codeInput.getText());
@@ -44,12 +37,8 @@ public class EditUsers {
         Users newUser = new Users(password, name, role);
         usersList.put(code, newUser);
 
-        try (Writer writer = new FileWriter("POS System/src/Data/data.json")) {
-            gson.toJson(usersList, writer);
-            writer.close();
-        } catch (Exception e) {
-            e.getStackTrace();
-        }
+        // Update data
+        writeData();
         
     }
 
@@ -57,9 +46,7 @@ public class EditUsers {
 
         int selectedRow = UsersTable.table.getSelectedRow();
         int selectedColumn = 0;
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        HashMap<Integer, Users> usersList = new HashMap<>();
-
+        
         // Remove data from table
         if (selectedRow != -1) {
             DefaultTableModel model = (DefaultTableModel) UsersTable.table.getModel();
@@ -71,25 +58,13 @@ public class EditUsers {
             int code = Integer.parseInt(UsersTable.table.getValueAt(row, column).toString());
 
             // Read before delete data
-            try (InputStream inputStream = EditUsers.class.getResourceAsStream("/Data/data.json")) {
-            
-                Type type = new TypeToken<HashMap<Integer, Users>>() {}.getType();
-                InputStreamReader reader = new InputStreamReader(inputStream);
-                usersList = gson.fromJson(reader, type);
-  
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            usersList = readUserHashMap();
 
             // Delete data from hashmap
             usersList.remove(code);
 
             // Delete Data from Json
-            try (Writer writer = new FileWriter("POS System/src/Data/data.json")) {
-                gson.toJson(usersList, writer);
-            } catch (Exception e) {
-                e.getStackTrace();
-            }
+            writeData();
 
             model.removeRow(selectedRow);
 
@@ -98,18 +73,8 @@ public class EditUsers {
 
     public static void editUsersInfo(){
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        HashMap<Integer, Users> usersList = new HashMap<>();
-
         // Read file before write to avoid delete data
-        try (InputStream inputStream = EditUsers.class.getResourceAsStream("/Data/data.json")) {
-            Type type = new TypeToken<HashMap<Integer, Users>>() {}.getType();
-            InputStreamReader reader = new InputStreamReader(inputStream);
-            usersList = gson.fromJson(reader, type);
-
-        } catch (Exception e) {
-            e.getStackTrace();
-        }
+        usersList = readUserHashMap();
 
         // Get selected user data
         selectedRow = UsersTable.table.getSelectedRow();
@@ -141,11 +106,7 @@ public class EditUsers {
         usersList.put(code, user);
 
         // Update json with new information
-        try (Writer writer = new FileWriter("POS System/src/Data/data.json")) {
-            gson.toJson(usersList, writer);
-        } catch (Exception e) {
-            e.getStackTrace();
-        }
+        writeData();
 
         DefaultTableModel model = (DefaultTableModel) UsersTable.table.getModel();
         model.setValueAt(user.getName(), row, 1);
@@ -156,9 +117,6 @@ public class EditUsers {
 
     public static HashMap<Integer, Users> readUserHashMap(){
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        HashMap<Integer, Users> usersList = new HashMap<>();
-
         try (InputStream inputStream = EditUsers.class.getResourceAsStream("/Data/data.json")) {
             Type type = new TypeToken<HashMap<Integer, Users>>() {}.getType();
             InputStreamReader reader = new InputStreamReader(inputStream);
@@ -168,6 +126,14 @@ public class EditUsers {
             e.getStackTrace();
         }
         return usersList;
+    }
+
+    private static void writeData(){
+        try (Writer writer = new FileWriter("POS System/src/Data/data.json")) {
+            gson.toJson(usersList, writer);
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
     }
 
 }
