@@ -4,9 +4,14 @@
     "name": "Scobby",
     "role": "Admin"
   },
-  "789": {
-    "password": "nasa",
+  "4545": {
+    "password": "paz",
     "name": "Juan",
-    "role": "User"
+    "role": "Admin"
+  },
+  "1234": {
+    "password": "bueno",
+    "name": "Ximena",
+    "role": "Admin"
   }
 }

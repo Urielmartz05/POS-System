@@ -3,6 +3,7 @@ package systemgui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.util.HashMap;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -13,20 +14,113 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 
-import Controller.AddUsers;
+import Controller.EditUsers;
 import GUIHelpers.TextPrompt;
+import Model.Users;
 
 public class EditUsersGuis {
 
-    public static JTextField codeInput;
-    public static JTextField nameInput;
+    public static JTextField codeInput = new JTextField();
+    public static JTextField nameInput = new JTextField();
     public static JComboBox<String> roleBox;
     public static JPasswordField passwordInput;
 
+    
+
     public static void createNewUser(){
 
+        JPanel panel = editGui(true);
+        codeInput.setText("");
+        nameInput.setText("");
+
+        // JOption Pane with Input Fields
+        int result = JOptionPane.showConfirmDialog(
+            null,                       
+            panel,
+            "New User",
+            JOptionPane.OK_CANCEL_OPTION,
+            JOptionPane.PLAIN_MESSAGE    
+        );
+
+        if (result == JOptionPane.OK_OPTION) {
+
+            String code = codeInput.getText();
+            String name = nameInput.getText();
+            String role = (String) roleBox.getSelectedItem();
+            String password = new String(passwordInput.getPassword());
+            
+            if (code.isEmpty() || name.isEmpty() || password.isEmpty()) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "All fields are required",
+                    "Validation error!",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+
+            else {
+                EditUsers.addNewUser();
+                UsersTable.model.addRow(new Object[]{ code, name, role, password });
+            }
+
+        }
+
+    } 
+
+    // EditUsers.editUsersInfo();
+    public static void editUserInfo(){
+
+        JPanel panel = editGui(false);
+
+        // Get specific user information
+        HashMap<Integer, Users> usersList = EditUsers.readUserHashMap();
+        int selectedRow = UsersTable.table.getSelectedRow();
+        int selectedColumn = 0;
+        int row = UsersTable.table.convertRowIndexToModel(selectedRow);
+        int column = UsersTable.table.convertColumnIndexToModel(selectedColumn);
+
+        // Set data in input fields
+        int userCode = Integer.parseInt(UsersTable.table.getValueAt(row, column).toString());
+        Users user = usersList.get(userCode);
+        
+        // Fill fields with user info
+        codeInput.setText(String.valueOf(userCode));
+        nameInput.setText(user.getName());
+
+        // Show Edit User GUI
+        int result = JOptionPane.showConfirmDialog(
+            null,                       
+            panel,
+            "Update User Info",
+            JOptionPane.OK_CANCEL_OPTION,
+            JOptionPane.PLAIN_MESSAGE    
+        );
+
+        if (result == JOptionPane.OK_OPTION) {
+
+            String code = codeInput.getText();
+            String name = nameInput.getText();
+            String role = (String) roleBox.getSelectedItem();
+            String password = new String(passwordInput.getPassword());
+
+            if (code.isEmpty() || name.isEmpty()) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Please fill blank fields!",
+                    "Update User Info",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+
+            else{
+                EditUsers.editUsersInfo();
+            }
+        }
+    }
+
+
+    private static JPanel editGui(boolean showCodeField){
         // Create New User Main Panel
         JPanel newUserMainPanel = new JPanel();
         newUserMainPanel.setLayout(new BorderLayout());
@@ -51,9 +145,12 @@ public class EditUsersGuis {
         // Input code of User
         codeInput = new JTextField();
         codeInput.setMaximumSize(new Dimension(320,40));
-        infoPanel.add(codeInput);
         new TextPrompt("Code", codeInput);
-        infoPanel.add(Box.createVerticalStrut(20));
+
+        if (showCodeField) {
+            infoPanel.add(codeInput);
+            infoPanel.add(Box.createVerticalStrut(20));
+        }
 
         // Input name of User
         nameInput = new JTextField();
@@ -74,39 +171,8 @@ public class EditUsersGuis {
         passwordInput.setMaximumSize(new Dimension(320,40));
         infoPanel.add(passwordInput);
         new TextPrompt("Password", passwordInput);
-        
-        // JOption Pane with Input Fields
-        int result = JOptionPane.showConfirmDialog(
-            null,                       
-            newUserMainPanel,
-            "New User",
-            JOptionPane.OK_CANCEL_OPTION,
-            JOptionPane.PLAIN_MESSAGE    
-        );
 
-        if (result == JOptionPane.OK_OPTION) {
-
-            String code = codeInput.getText();
-            String name = nameInput.getText();
-            String role = (String) roleBox.getSelectedItem();
-            String password = new String(passwordInput.getPassword());
-            
-            if (code.isEmpty() || name.isEmpty() || password.isEmpty()) {
-                JOptionPane.showMessageDialog(
-                    null,
-                    "All fields are required",
-                    "Validation error!",
-                    JOptionPane.ERROR_MESSAGE
-                );
-            }
-
-            else {
-                AddUsers.addNewUser();
-                UsersTable.model.addRow(new Object[]{ code, name, role, password });
-            }
-
-        }
-
-    } 
+        return newUserMainPanel;
+    }
  
 }

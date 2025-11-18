@@ -18,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 import Controller.Authentication;
 import Logic.ControlPanelCreation;
 import Model.Users;
+import main.View;
 
 public class ControlPanel extends JPanel {
 
@@ -106,11 +107,11 @@ public class ControlPanel extends JPanel {
                 btnsContainer.add(adminBtns[i]);
             }
 
-            // adminBtns[0].addActionListener(e -> {
-            //     Table table = new Table();
-            //     View.superMainPanel.add(table, "Table");
-            //     View.superMainLayout.show(View.superMainPanel, "Table");
-            // });
+            adminBtns[0].addActionListener(e -> {
+                UsersTable table = new UsersTable();
+                View.superMainPanel.add(table, "Table");
+                View.superMainLayout.show(View.superMainPanel, "Table");
+            });
 
         }
 

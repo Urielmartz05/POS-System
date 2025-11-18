@@ -5,8 +5,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import Controller.Authentication;
+import Model.Users;
+import systemgui.ControlPanel;
 import systemgui.LogIn;
-import systemgui.UsersTable;
 
 public class View extends JFrame {
 
@@ -32,36 +34,36 @@ public class View extends JFrame {
             LogIn.alertLabel.setVisible(false);
             LogIn.getLoginBtn().addActionListener(event -> {
                 
-                // String accessCode = LogIn.emailInput.getText();
-                // String password = new String(LogIn.passwordInput.getPassword());
+                String accessCode = LogIn.emailInput.getText();
+                String password = new String(LogIn.passwordInput.getPassword());
 
-                // if (accessCode.isEmpty() || password.isEmpty()) {
-                //     LogIn.alertLabel.setText("Please fill the fields");
-                //     LogIn.alertLabel.setVisible(true);
-                //     LogIn.alertLabel.revalidate();
-                //     LogIn.alertLabel.repaint();
-                //     return;
-                // }
+                if (accessCode.isEmpty() || password.isEmpty()) {
+                    LogIn.alertLabel.setText("Please fill the fields");
+                    LogIn.alertLabel.setVisible(true);
+                    LogIn.alertLabel.revalidate();
+                    LogIn.alertLabel.repaint();
+                    return;
+                }
                 
-                // Users user = Authentication.userAuthentication(accessCode, password);
+                Users user = Authentication.userAuthentication(accessCode, password);
 
-                // if (user == null) {
-                //     LogIn.alertLabel.setText("Email or password isn't correct!");
-                //     LogIn.alertLabel.setVisible(true);
-                //     LogIn.alertLabel.revalidate();
-                //     LogIn.alertLabel.repaint();
-                // }
+                if (user == null) {
+                    LogIn.alertLabel.setText("Email or password isn't correct!");
+                    LogIn.alertLabel.setVisible(true);
+                    LogIn.alertLabel.revalidate();
+                    LogIn.alertLabel.repaint();
+                }
 
-                // else {
-                //     LogIn.alertLabel.setVisible(false);
-                //     ControlPanel controlPanel = new ControlPanel(user);
-                //     superMainPanel.add(controlPanel, "ControlPanel");
-                //     superMainLayout.show(superMainPanel, "ControlPanel");
-                // }
+                else {
+                    LogIn.alertLabel.setVisible(false);
+                    ControlPanel controlPanel = new ControlPanel(user);
+                    superMainPanel.add(controlPanel, "ControlPanel");
+                    superMainLayout.show(superMainPanel, "ControlPanel");
+                }
 
-                UsersTable table = new UsersTable();
-                superMainPanel.add(table, "Table");
-                superMainLayout.show(superMainPanel, "Table");
+                // UsersTable table = new UsersTable();
+                // superMainPanel.add(table, "Table");
+                // superMainLayout.show(superMainPanel, "Table");
 
 
             });

@@ -16,6 +16,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -23,6 +24,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import Controller.EditUsers;
 import GUIHelpers.TextPrompt;
 import Logic.UsersFileEditor;
 import Model.Users;
@@ -158,10 +160,43 @@ public class UsersTable extends JPanel{
         updateUserBtn.setBackground(new Color(0xD9D9D9));
         controlPanelBtnsPanel.add(updateUserBtn);
 
+        updateUserBtn.addActionListener(evt -> {
+
+            if (UsersTable.table.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Please select an user!",
+                    "Update User Info",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+            else{
+                EditUsersGuis.editUserInfo();
+            }
+
+            
+        });
+
         JButton deleteUserBtn = new JButton("Delete User");
         btnCustom(deleteUserBtn);
         deleteUserBtn.setBackground(new Color(0xFF3131));
         controlPanelBtnsPanel.add(deleteUserBtn);
+
+        deleteUserBtn.addActionListener(evt -> {
+
+            if (UsersTable.table.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Please select an user!",
+                    "Update User Info",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+            else{
+                EditUsers.deleteUser();
+            }
+           
+        });
 
         // Search Panel
         JPanel searchPanel = new JPanel();
