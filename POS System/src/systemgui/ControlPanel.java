@@ -18,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 import Controller.Authentication;
 import Logic.ControlPanelCreation;
 import Model.Users;
+import main.View;
 
 public class ControlPanel extends JPanel {
 
@@ -42,7 +43,7 @@ public class ControlPanel extends JPanel {
         // Nav Bar Panel
         JPanel navBarPanel = new JPanel();
         navBarPanel.setLayout(new GridLayout(1,2));
-        navBarPanel.setMaximumSize(new Dimension(1080, 100));
+        navBarPanel.setMaximumSize(new Dimension(1366, 100));
         navBarPanel.setBorder(new EmptyBorder(20,20,20,0));
         navBarPanel.setBackground(new Color(0xD52D5D));
         controlPanelMainPanel.add(navBarPanel,BorderLayout.NORTH);
@@ -105,6 +106,13 @@ public class ControlPanel extends JPanel {
             for (int i = 0; i < adminBtns.length; i++) {
                 btnsContainer.add(adminBtns[i]);
             }
+
+            adminBtns[0].addActionListener(e -> {
+                UsersTable table = new UsersTable();
+                View.superMainPanel.add(table, "Table");
+                View.superMainLayout.show(View.superMainPanel, "Table");
+            });
+
         }
 
         // Generate User Panel

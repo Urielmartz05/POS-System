@@ -1,3 +1,4 @@
+package main;
 import java.awt.CardLayout;
 
 import javax.swing.JFrame;
@@ -59,6 +60,10 @@ public class View extends JFrame {
                     superMainPanel.add(controlPanel, "ControlPanel");
                     superMainLayout.show(superMainPanel, "ControlPanel");
                 }
+
+                // UsersTable table = new UsersTable();
+                // superMainPanel.add(table, "Table");
+                // superMainLayout.show(superMainPanel, "Table");
 
 
             });
