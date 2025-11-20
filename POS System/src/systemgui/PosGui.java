@@ -21,10 +21,10 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-public class Inventory extends JPanel {
+public class PosGui extends JPanel {
     
 
-    public Inventory(){
+    public PosGui(){
         initComponents();
     }
 
@@ -71,14 +71,6 @@ public class Inventory extends JPanel {
         navRightPanel.setOpaque(false);
         navBarPanel.add(navRightPanel);
 
-        // Back to Control Panel
-        JLabel backMenu = new JLabel("Menu");
-        backMenu.setFont(backMenu.getFont().deriveFont(24f));
-        navRightPanel.add(backMenu);
-
-        // Add space between menu and logout 
-        navRightPanel.add(Box.createHorizontalStrut(10));
-
         // Logout
         JLabel logOutTxt = new JLabel("Log out");
         logOutTxt.setFont(logOutTxt.getFont().deriveFont(24f));
@@ -119,29 +111,54 @@ public class Inventory extends JPanel {
 
         // Center Main Panel
         JPanel centerMainPanel = new JPanel();
-        centerMainPanel.setLayout(new BorderLayout());
+        centerMainPanel.setLayout(new BoxLayout(centerMainPanel, BoxLayout.Y_AXIS));
         centerMainPanel.setBackground(new Color(0xE8CEB0));
-        centerMainPanel.setBorder(new EmptyBorder(10,10,10,10));
+        centerMainPanel.setBorder(new EmptyBorder(0,10,10,10));
         tableMainPanel.add(centerMainPanel);
 
+        // Center top panel
+        JPanel centerTopPanel = new JPanel();
+        centerTopPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        centerTopPanel.setPreferredSize(new Dimension(500, 80));
+        centerTopPanel.setBorder(new EmptyBorder(5,0,5,0));
+        centerTopPanel.setBackground(new Color(0xE8CEB0));
+        centerMainPanel.add(centerTopPanel, BorderLayout.NORTH);
+
+        // Add Product btn
+        JButton addProductBtn = new JButton("Add");
+        btnCustomControls(addProductBtn);
+        addProductBtn.setBackground(Color.GREEN);
+        centerTopPanel.add(addProductBtn);
+
+        // Delete Product btn
+        JButton deleteProductBtn = new JButton("Delete");
+        btnCustomControls(deleteProductBtn);
+        deleteProductBtn.setBackground(Color.RED);
+        centerTopPanel.add(deleteProductBtn);
+        
+        // Center bottom panel
+        JPanel centerTablePanel = new JPanel();
+        centerTablePanel.setLayout(new BorderLayout());
+        centerTablePanel.setBackground(Color.GREEN);
+        centerMainPanel.add(centerTablePanel);
+
         // Table Data
-        String[] columns = { "Code", "Name", "Role", "Password" };
+        String[] columns = { "ITEM", "CODE", "QUANTITY","PRICE", "TOTAL" };
 
         Object[][] data = {
-            { 101, "Alice",  "Admin",    "1234" },
-            { 102, "Bob",    "Cashier",  "abcd" },
-            { 103, "Carlos", "Manager",  "pass" }
+            { 101, "Item 1",  "Admin",    "1234", "1234" },
+            { 102, "Item 2",    "Cashier",  "abcd", "1234" },
+            { 103, "Item 3", "Manager",  "pass", "1234" }
         };
 
         DefaultTableModel model = new DefaultTableModel(data, columns);
-
         JTable table = new JTable(model);
         table.getTableHeader().setFont(table.getFont().deriveFont(20f));
         table.setRowHeight(30);
         table.setFont(table.getFont().deriveFont(16f));
-
+        
         JScrollPane scroll = new JScrollPane(table);
-        centerMainPanel.add(scroll);
+        centerTablePanel.add(scroll, BorderLayout.CENTER);
 
 
         // Bottom Panel
@@ -169,11 +186,6 @@ public class Inventory extends JPanel {
         manualSearchBtn.setBackground(Color.WHITE);
         bottomLeftPanel.add(manualSearchBtn);
 
-        JButton languageBtn = new JButton("Language");
-        btnCustom(languageBtn);
-        languageBtn.setBackground(Color.WHITE);
-        bottomLeftPanel.add(languageBtn);
-
         // Bottom Right Panel
         JPanel bottomRightPanel = new JPanel();
         bottomRightPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -200,6 +212,13 @@ public class Inventory extends JPanel {
     private void btnCustom(JButton button){
         button.setFont(button.getFont().deriveFont(32f));
         button.setPreferredSize(new Dimension(210, 80));
+        button.setFocusable(false);
+        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }
+
+    private void btnCustomControls(JButton button){
+        button.setFont(button.getFont().deriveFont(20f));
+        button.setPreferredSize(new Dimension(140, 50));
         button.setFocusable(false);
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }

@@ -12,7 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import main.View;
 import systemgui.ControlPanel;
+import systemgui.PosGui;
 
 public class ControlPanelCreation {
 
@@ -43,6 +45,12 @@ public class ControlPanelCreation {
         salesBtn.setBackground(new Color(0X00BF63));
         salesBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         salesPanel.add(salesBtn);
+
+        salesBtn.addActionListener(e-> {
+            PosGui pos = new PosGui();
+            View.superMainPanel.add(pos, "POS");
+            View.superMainLayout.show(View.superMainPanel, "POS");
+        });
 
         return btnPanel;
     }
