@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.*;
 
 import Controller.Authentication;
 import Logic.ControlPanelCreation;
@@ -111,6 +112,16 @@ public class ControlPanel extends JPanel {
                 UsersTable table = new UsersTable();
                 View.superMainPanel.add(table, "Table");
                 View.superMainLayout.show(View.superMainPanel, "Table");
+            });
+            adminBtns[1].addActionListener(e -> {
+            InventoryPanel inventory = new InventoryPanel();
+                View.superMainPanel.add(inventory,"Inventory");
+                View.superMainLayout.show(View.superMainPanel, "Inventory");
+            });
+            adminBtns[2].addActionListener(e -> {
+                OrdersHistoryPanel orders = new OrdersHistoryPanel();
+                View.superMainPanel.add(orders,"Inventory");
+                View.superMainLayout.show(View.superMainPanel, "Inventory");
             });
 
         }
