@@ -61,9 +61,9 @@ public class View extends JFrame {
                     superMainLayout.show(superMainPanel, "ControlPanel");
                 }
 
-                // UsersTable table = new UsersTable();
-                // superMainPanel.add(table, "Table");
-                // superMainLayout.show(superMainPanel, "Table");
+                // PosGui posGui = new PosGui();
+                // superMainPanel.add(posGui, "PosGui");
+                // superMainLayout.show(superMainPanel, "PosGui");
 
 
             });
