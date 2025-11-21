@@ -60,7 +60,6 @@ public class LogIn extends JPanel{
         ImageIcon resizedRestLogo = new ImageIcon(restLogoResize);
         JLabel restIcon = new JLabel(resizedRestLogo);
         navBarPanel.add(restIcon);
-        
 
         // Admin Text
         JLabel companyText = new JLabel("MyCompany");

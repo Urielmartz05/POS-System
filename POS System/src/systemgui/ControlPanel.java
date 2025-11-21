@@ -2,12 +2,15 @@ package systemgui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -76,9 +79,12 @@ public class ControlPanel extends JPanel {
         navBarPanel.add(navRightPanel);
 
         // Logout
-        JLabel logOutTxt = new JLabel("Log out");
-        logOutTxt.setFont(logOutTxt.getFont().deriveFont(24f));
-        navRightPanel.add(logOutTxt);
+        JLabel logOut = new JLabel("Log out");
+        logOut.setFont(logOut.getFont().deriveFont(24f));
+        logOut.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        navRightPanel.add(logOut);
+
+        Authentication.LogOut(logOut);
 
         // Center Panel
         JPanel centerPanel = new JPanel();
@@ -139,5 +145,16 @@ public class ControlPanel extends JPanel {
 
         add(controlPanelMainPanel);
     }
-    
+
+    public static void controlPanelBack(JLabel menu){
+        menu.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e){
+                View.superMainLayout.show(View.superMainPanel, "ControlPanel");
+            }
+
+        });
+
+    }
 }

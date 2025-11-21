@@ -26,8 +26,6 @@ public class EditUsersGuis {
     public static JComboBox<String> roleBox;
     public static JPasswordField passwordInput;
 
-    
-
     public static void createNewUser(){
 
         JPanel panel = editGui(true);

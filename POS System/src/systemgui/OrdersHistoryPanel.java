@@ -21,6 +21,8 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import Controller.Authentication;
+
 public class OrdersHistoryPanel extends JPanel {
 
     public static JPanel OrdersHistoryPanel;
@@ -74,15 +76,21 @@ public class OrdersHistoryPanel extends JPanel {
         // Back to Control Panel
         JLabel backMenu = new JLabel("Menu");
         backMenu.setFont(backMenu.getFont().deriveFont(24f));
+        backMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         navRightPanel.add(backMenu);
+
+        ControlPanel.controlPanelBack(backMenu);
 
         // Add space between menu and logout 
         navRightPanel.add(Box.createHorizontalStrut(10));
 
         // Logout
-        JLabel logOutTxt = new JLabel("Log out");
-        logOutTxt.setFont(logOutTxt.getFont().deriveFont(24f));
-        navRightPanel.add(logOutTxt);
+        JLabel logOut = new JLabel("Log out");
+        logOut.setFont(logOut.getFont().deriveFont(24f));
+        logOut.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        navRightPanel.add(logOut);
+
+        Authentication.LogOut(logOut);
 
         // Left panel creation
         JPanel leftMainPanel = new JPanel();

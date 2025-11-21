@@ -29,8 +29,8 @@ public class View extends JFrame {
             superMainPanel = new JPanel(superMainLayout);
 
             // Sales Man Login
-            LogIn salesManLogIn = new LogIn();
-            superMainPanel.add(salesManLogIn, "SalesManLogIn");
+            LogIn logIn = new LogIn();
+            superMainPanel.add(logIn, "LogIn");
 
             // Login Btn
             LogIn.alertLabel.setVisible(false);

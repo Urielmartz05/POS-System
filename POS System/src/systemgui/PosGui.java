@@ -21,6 +21,9 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import Controller.Authentication;
+import main.View;
+
 public class PosGui extends JPanel {
     
 
@@ -72,9 +75,12 @@ public class PosGui extends JPanel {
         navBarPanel.add(navRightPanel);
 
         // Logout
-        JLabel logOutTxt = new JLabel("Log out");
-        logOutTxt.setFont(logOutTxt.getFont().deriveFont(24f));
-        navRightPanel.add(logOutTxt);
+        JLabel logOut = new JLabel("Log out");
+        logOut.setFont(logOut.getFont().deriveFont(24f));
+        logOut.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        navRightPanel.add(logOut);
+
+        Authentication.LogOut(logOut);
 
         // Right Panel
         JPanel rightPanel = new JPanel();
@@ -180,6 +186,10 @@ public class PosGui extends JPanel {
         exitBtn.setBackground(Color.WHITE);
         btnCustom(exitBtn);
         bottomLeftPanel.add(exitBtn);
+
+        exitBtn.addActionListener(e -> {
+            View.superMainLayout.show(View.superMainPanel, "ControlPanel");
+        });
 
         JButton manualSearchBtn = new JButton("Search");
         btnCustom(manualSearchBtn);

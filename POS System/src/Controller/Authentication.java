@@ -1,15 +1,23 @@
 package Controller;
 
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.HashMap;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import Model.Users;
+import main.View;
+import systemgui.LogIn;
 
 public class Authentication {
 
@@ -41,5 +49,32 @@ public class Authentication {
         return correctUser;
     }
 
+    public static void LogOut(JLabel logOut){
+        logOut.addMouseListener(new MouseAdapter() {
+    
+            @Override
+            public void mouseClicked(MouseEvent e){
+                
+                int answer = JOptionPane.showConfirmDialog(
+                    null,
+                    "Do you want to log out?",
+                    "Log out",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE
+                );
+
+                if (answer == JOptionPane.YES_OPTION) {
+                    View.superMainLayout.show(View.superMainPanel, "LogIn");
+                    LogIn.emailInput.setText("");
+                    LogIn.passwordInput.setText("");
+                }
+
+            }   
+
+        });
+    }
+
+
+    
 
 }
