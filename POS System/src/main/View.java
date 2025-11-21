@@ -8,7 +8,9 @@ import javax.swing.SwingUtilities;
 import Controller.Authentication;
 import Model.Users;
 import systemgui.ControlPanel;
+import systemgui.InventoryPanel;
 import systemgui.LogIn;
+import systemgui.OrdersHistoryPanel;
 
 public class View extends JFrame {
 
@@ -60,11 +62,6 @@ public class View extends JFrame {
                     superMainPanel.add(controlPanel, "ControlPanel");
                     superMainLayout.show(superMainPanel, "ControlPanel");
                 }
-
-                // PosGui posGui = new PosGui();
-                // superMainPanel.add(posGui, "PosGui");
-                // superMainLayout.show(superMainPanel, "PosGui");
-
 
             });
 

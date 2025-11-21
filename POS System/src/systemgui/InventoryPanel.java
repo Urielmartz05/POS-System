@@ -1,170 +1,197 @@
 package systemgui;
 
-import GUIHelpers.TextPrompt;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Image;
 import java.util.HashMap;
 
-import Model.Inventory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+import GUIHelpers.TextPrompt;
 import Logic.InventoryFileEditor;
+import Model.Inventory;
 
 public class InventoryPanel extends JPanel {
-    public InventoryPanel() {initComponents();}
+
     public static JPanel InventoryPanel;
+
+    public InventoryPanel() {
+        initComponents();
+    }
+
     private void initComponents() {
+        // Initialize Panel
         setLayout(new BorderLayout());
-        // Orders Panel Main Panel
+        
+        // Main Panel
         InventoryPanel = new JPanel();
         InventoryPanel.setLayout(new BorderLayout());
 
         // Nav Bar Panel
         JPanel navBarPanel = new JPanel();
-        navBarPanel.setLayout(new GridLayout(1, 2));
+        navBarPanel.setLayout(new GridLayout(1,2));
         navBarPanel.setMaximumSize(new Dimension(1080, 100));
-        navBarPanel.setBorder(new EmptyBorder(20, 20, 20, 0));
+        navBarPanel.setBorder(new EmptyBorder(20,20,20,0));
         navBarPanel.setBackground(new Color(0xD52D5D));
+        InventoryPanel.add(navBarPanel,BorderLayout.NORTH);
 
-        JPanel navLeftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        // Navbar Left Panel
+        JPanel navLeftPanel = new JPanel();
+        navLeftPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         navLeftPanel.setOpaque(false);
-
-        JPanel navRightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        navRightPanel.setBorder(new EmptyBorder(0, 0, 0, 20));
-        navRightPanel.setOpaque(false);
-        JButton exitbtn = new JButton("Exit To Menu");
-        exitbtn.setBackground(new Color(0xD52D5D));
-        exitbtn.setForeground(Color.WHITE);
-        exitbtn.setFont(exitbtn.getFont().deriveFont(14f));
-        exitbtn.setFocusPainted(false);
-        exitbtn.setBorderPainted(false);
-        JButton logOutbtn = new JButton("Log Out");
-        logOutbtn.setBackground(new Color(0xD52D5D));
-        logOutbtn.setForeground(Color.WHITE);
-        logOutbtn.setFont(logOutbtn.getFont().deriveFont(14f));
-        logOutbtn.setFocusPainted(false);
-        logOutbtn.setBorderPainted(false);
-
-        navRightPanel.add(exitbtn);
-        navRightPanel.add(logOutbtn);
         navBarPanel.add(navLeftPanel);
-        navBarPanel.add(navRightPanel);
 
-
-        //Side Nav Bar Panel
-        JPanel SidePanel = new JPanel();
-        SidePanel.setLayout(new BoxLayout(SidePanel, BoxLayout.Y_AXIS));
-        SidePanel.setMaximumSize(new Dimension(100, 1080));
-        SidePanel.setBorder(new EmptyBorder(20, 0, 20, 0));
-        SidePanel.setBackground(new Color(0xD52D5D));
-
-
-        //Side nav bar Icon
+        // Restaurant Logo
         ImageIcon restLogo = new ImageIcon(getClass().getResource("/Images/RestaurantLogo.png"));
-        Image restLogoResize = restLogo.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+        Image restLogoResize = restLogo.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         ImageIcon resizedRestLogo = new ImageIcon(restLogoResize);
         JLabel restIcon = new JLabel(resizedRestLogo);
-        restIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
-        SidePanel.add(restIcon);
+        navLeftPanel.add(restIcon);
 
-        JPanel SideOrdersHistory = new JPanel(new BorderLayout());
-        SideOrdersHistory.setBackground(new Color(106, 111, 187));
-        JLabel SideLabel = new JLabel("    Inventory    ");
-        SideLabel.setFont(SideLabel.getFont().deriveFont(20f));
-        SideLabel.setForeground(Color.BLACK);
-        SideOrdersHistory.setMaximumSize(new Dimension(Short.MAX_VALUE, 60));
-        SideOrdersHistory.add(SideLabel, BorderLayout.CENTER);
-        SideOrdersHistory.setAlignmentX(Component.CENTER_ALIGNMENT);
-        SidePanel.add(SideOrdersHistory);
+        // Company Text
+        JLabel companyText = new JLabel("MyCompany");
+        companyText.setFont(companyText.getFont().deriveFont(24f));
+        companyText.setForeground(Color.BLACK);
+        navLeftPanel.add(companyText);
 
-        //center top panel
-        JPanel centerTopPanel = new JPanel();
-        centerTopPanel.setLayout(new BorderLayout());
-        centerTopPanel.setBackground(new Color(0xE8CEB0));
+        // Navbar Right Panel
+        JPanel navRightPanel = new JPanel();
+        navRightPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        navRightPanel.setBorder(new EmptyBorder(0,0,0,20));
+        navRightPanel.setOpaque(false);
+        navBarPanel.add(navRightPanel);
 
-        JPanel topStuffPanel = new JPanel();
-        topStuffPanel.setLayout(new GridLayout(1, 2));
-        topStuffPanel.setOpaque(false);
-        JPanel stuffLeftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        stuffLeftPanel.setOpaque(false);
-        JLabel centerTopLabel = new JLabel("Products Inventory");
-        centerTopLabel.setFont(centerTopLabel.getFont().deriveFont(24f));
-        centerTopLabel.setForeground(Color.WHITE);
-        centerTopPanel.setBorder(new EmptyBorder(0,0,20,20));
-        centerTopLabel.setBorder(new EmptyBorder(20,20,20,20));
-        stuffLeftPanel.add(centerTopLabel);
+        // Back to Control Panel
+        JLabel backMenu = new JLabel("Menu");
+        backMenu.setFont(backMenu.getFont().deriveFont(24f));
+        navRightPanel.add(backMenu);
 
-        JPanel topStuffRightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        topStuffRightPanel.setOpaque(false);
-        JTextField searchBox = new JTextField(15);
-        TextPrompt searchPlaceholder = new TextPrompt("Search product by name", searchBox);
-        searchBox.setFont(searchBox.getFont().deriveFont(16f));
-        topStuffRightPanel.add(searchBox);
-        topStuffPanel.add(stuffLeftPanel);
-        topStuffPanel.add(topStuffRightPanel);
-        centerTopPanel.add(topStuffPanel, BorderLayout.NORTH);
+        // Add space between menu and logout 
+        navRightPanel.add(Box.createHorizontalStrut(10));
 
-        //center top buttons panel
-        JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
-        buttonsPanel.setOpaque(false);
+        // Logout
+        JLabel logOutTxt = new JLabel("Log out");
+        logOutTxt.setFont(logOutTxt.getFont().deriveFont(24f));
+        navRightPanel.add(logOutTxt);
 
-        JButton addBtn = new JButton("Add New Product");
-        addBtn.setFont(addBtn.getFont().deriveFont(14f));
-        addBtn.setForeground(Color.BLACK);
-        addBtn.setBackground(new Color(12, 192, 223));
-        addBtn.setFocusPainted(false);
-        addBtn.setBorderPainted(false);
+        // Left panel creation
+        JPanel leftMainPanel = new JPanel();
+        leftMainPanel.setLayout(new BorderLayout());
+        leftMainPanel.setBackground(new Color(0xD52D5D));
+        leftMainPanel.setPreferredSize(new Dimension(150, 668));
+        InventoryPanel.add(leftMainPanel, BorderLayout.WEST);
 
-        JButton updateBtn = new JButton("Update Product");
-        updateBtn.setFont(updateBtn.getFont().deriveFont(14f));
-        updateBtn.setForeground(Color.BLACK);
-        updateBtn.setBackground(Color.GRAY);
-        updateBtn.setFocusPainted(false);
-        updateBtn.setBorderPainted(false);
+        // Text Panel in LeftPanel
+        JPanel textPanel = new JPanel();
+        textPanel.setLayout(new GridBagLayout());
+        textPanel.setPreferredSize(new Dimension(150,70));
+        textPanel.setBackground(new Color(0xede080));
+        leftMainPanel.add(textPanel, BorderLayout.NORTH);
 
-        JButton deleteBtn = new JButton("Delete Product");
-        deleteBtn.setFont(deleteBtn.getFont().deriveFont(14f));
-        deleteBtn.setForeground(Color.BLACK);
-        deleteBtn.setBackground(Color.RED);
-        deleteBtn.setFocusPainted(false);
-        deleteBtn.setBorderPainted(false);
+        // Title text
+        JLabel miniTitle = new JLabel("Inventory");
+        miniTitle.setFont(miniTitle.getFont().deriveFont(24f));
+        textPanel.add(miniTitle);
 
-        JButton importBtn = new JButton("Import Product");
-        importBtn.setFont(importBtn.getFont().deriveFont(14f));
-        importBtn.setForeground(Color.BLACK);
-        importBtn.setBackground(Color.GRAY);
-        importBtn.setFocusPainted(false);
-        importBtn.setBorderPainted(false);
+        // Center Main Panel
+        JPanel centerMainPanel = new JPanel();
+        centerMainPanel.setLayout(new BoxLayout(centerMainPanel, BoxLayout.Y_AXIS));
+        centerMainPanel.setBackground(new Color(0xE8CEB0));
+        InventoryPanel.add(centerMainPanel, BorderLayout.CENTER);
 
-        JButton exportBtn = new JButton("Export Product");
-        exportBtn.setFont(exportBtn.getFont().deriveFont(14f));
-        exportBtn.setForeground(Color.BLACK);
-        exportBtn.setBackground(Color.GRAY);
-        exportBtn.setFocusPainted(false);
-        exportBtn.setBorderPainted(false);
+        // Title Panel
+        JPanel mainTitlePanel = new JPanel();
+        mainTitlePanel.setLayout(new GridLayout(1, 2));
+        mainTitlePanel.setPreferredSize(new Dimension(1216, 70));
+        mainTitlePanel.setOpaque(false);
+        centerMainPanel.add(mainTitlePanel);
 
-        buttonsPanel.add(addBtn, BorderLayout.SOUTH);
-        buttonsPanel.add(updateBtn, BorderLayout.SOUTH);
-        buttonsPanel.add(deleteBtn, BorderLayout.SOUTH);
-        buttonsPanel.add(importBtn, BorderLayout.SOUTH);
-        buttonsPanel.add(exportBtn, BorderLayout.SOUTH);
+        // Main title
+        JLabel mainTitle = new JLabel("Products Inventory");
+        mainTitle.setFont(mainTitle.getFont().deriveFont(28f));
+        mainTitle.setBorder(new EmptyBorder(0,20,0,0));
+        mainTitlePanel.add(mainTitle);
 
-        centerTopPanel.add(buttonsPanel, BorderLayout.WEST);
+        // Search Panel
+        JPanel searchPanel = new JPanel();
+        searchPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 25, 20));
+        searchPanel.setOpaque(false);
+        mainTitlePanel.add(searchPanel);
 
+        // Search Input
+        JTextField searchInput = new JTextField();
+        searchInput.setPreferredSize(new Dimension(300, 30));
+        searchPanel.add(searchInput);
+        new TextPrompt("Search product by name", searchInput);
 
-        //center panel
-        JPanel centerPanel = new JPanel();
-        centerPanel.setLayout(new BorderLayout());
-        centerPanel.setBorder(new EmptyBorder(20,20,20,20));
-        centerPanel.setBackground(new Color(0xE8CEB0));
+        // Control Panel
+        JPanel controlPanel = new JPanel();
+        controlPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 0));
+        controlPanel.setPreferredSize(new Dimension(1216, 70));
+        controlPanel.setBorder(new EmptyBorder(12,20,0,0));
+        controlPanel.setOpaque(false);
+        centerMainPanel.add(controlPanel);
 
-        //table creation
+        // Buttons
+        JButton addBtn = new JButton("Add Product");
+        btnCustom(addBtn);
+        addBtn.setBackground(new Color(0x0CCDF));
+        controlPanel.add(addBtn);
+
+        JButton updateBtn = new JButton("Update");
+        btnCustom(updateBtn);
+        updateBtn.setBackground(new Color(0xD9D9D9));
+        controlPanel.add(updateBtn);
+
+        JButton deleteBtn = new JButton("Delete");
+        btnCustom(deleteBtn);
+        deleteBtn.setBackground(new Color(0xFF3131));
+        controlPanel.add(deleteBtn);
+
+        JButton importBtn = new JButton("Import");
+        btnCustom(importBtn);
+        importBtn.setBackground(new Color(0xD9D9D9));
+        controlPanel.add(importBtn);
+
+        JButton exportBtn = new JButton("Export");
+        btnCustom(exportBtn);
+        exportBtn.setBackground(new Color(0xD9D9D9));
+        controlPanel.add(exportBtn);
+
+        
+
+        // Table Panel
+        JPanel tablePanel = new JPanel();
+        tablePanel.setLayout(new GridBagLayout());
+        tablePanel.setOpaque(false);
+        centerMainPanel.add(tablePanel);
+
+        // Table Creation
         InventoryFileEditor.dataInitializer();
         HashMap<Integer,Inventory> inventoryData = InventoryFileEditor.InventoryList;
-        //data
-        String[] ColumnNames={"Item","Type","Quantity","Code","Price"};
+
+        // Data store
+        String[] columns = {"Item","Type","Quantity","Code","Price"};
         Object[][] data = new Object[inventoryData.size()][5];
+
         int i = 0;
         for (Integer elem : inventoryData.keySet()) {
             Inventory inventory = inventoryData.get(elem);
@@ -173,29 +200,27 @@ public class InventoryPanel extends JPanel {
             data[i][2] = inventory.getQuantity();
             data[i][3] = elem;
             data[i][4] = inventory.getPrice();
-
             i++;
         }
 
-        DefaultTableModel model = new DefaultTableModel(data,ColumnNames);
-        JTable productTable = new JTable(model);
-        productTable.setFont(productTable.getFont().deriveFont(16f));
-        productTable.getTableHeader().setFont(productTable.getTableHeader().getFont().deriveFont(18f));
-        productTable.setRowHeight(30);
-        productTable.setFillsViewportHeight(true);
-        JScrollPane productsTableScrollPane = new JScrollPane(productTable);
-        productsTableScrollPane.setPreferredSize(new Dimension(800, 500));
-        centerPanel.setBorder(new EmptyBorder(50,50,50,50));
-        centerPanel.add(centerTopPanel, BorderLayout.NORTH);
-        centerPanel.add(productsTableScrollPane, BorderLayout.CENTER);
+        DefaultTableModel model = new DefaultTableModel(data, columns);
+        JTable table = new JTable(model);
+        table.setFont(table.getFont().deriveFont(16f));
+        table.getTableHeader().setFont(table.getTableHeader().getFont().deriveFont(18f));
+        table.setRowHeight(30);
+        table.setFillsViewportHeight(true);
 
-        InventoryPanel.add(navBarPanel,BorderLayout.NORTH);
-        InventoryPanel.add(SidePanel,BorderLayout.WEST);
-        InventoryPanel.add(centerPanel, BorderLayout.CENTER);
-
+        JScrollPane scroll = new JScrollPane(table);
+        scroll.setPreferredSize(new Dimension(1150, 450));
+        tablePanel.add(scroll, new GridBagConstraints());
 
         add(InventoryPanel);
-
     }
 
+    private void btnCustom(JButton button){
+        button.setPreferredSize(new Dimension(150,40));
+        button.setFont(button.getFont().deriveFont(18f));
+        button.setFocusable(false);
+        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }
 }

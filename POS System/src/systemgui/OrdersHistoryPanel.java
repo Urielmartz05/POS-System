@@ -1,16 +1,39 @@
 package systemgui;
-import java.awt.*;
-import javax.swing.*;
-import javax.swing.border.*;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Image;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-
 public class OrdersHistoryPanel extends JPanel {
-    public OrdersHistoryPanel() {initComponents();}
+
     public static JPanel OrdersHistoryPanel;
+
+    public OrdersHistoryPanel() {
+        initComponents();
+    }
+
     private void initComponents() {
+        // Initialize Panel
         setLayout(new BorderLayout());
-        // Orders Panel Main Panel
+        
+        // Main Panel
         OrdersHistoryPanel = new JPanel();
         OrdersHistoryPanel.setLayout(new BorderLayout());
 
@@ -20,121 +43,132 @@ public class OrdersHistoryPanel extends JPanel {
         navBarPanel.setMaximumSize(new Dimension(1080, 100));
         navBarPanel.setBorder(new EmptyBorder(20,20,20,0));
         navBarPanel.setBackground(new Color(0xD52D5D));
+        OrdersHistoryPanel.add(navBarPanel,BorderLayout.NORTH);
 
-        JPanel navLeftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        // Navbar Left Panel
+        JPanel navLeftPanel = new JPanel();
+        navLeftPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         navLeftPanel.setOpaque(false);
-
-        JPanel navRightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        navRightPanel.setBorder(new EmptyBorder(0,0,0,20));
-        navRightPanel.setOpaque(false);
-        JButton exitbtn = new JButton("Exit To Menu");
-        exitbtn.setBackground(new Color(0xD52D5D));
-        exitbtn.setForeground(Color.WHITE);
-        exitbtn.setFont(exitbtn.getFont().deriveFont(14f));
-        exitbtn.setFocusPainted(false);
-        exitbtn.setBorderPainted(false);
-        JButton logOutbtn = new JButton("Log Out");
-        logOutbtn.setBackground(new Color(0xD52D5D));
-        logOutbtn.setForeground(Color.WHITE);
-        logOutbtn.setFont(logOutbtn.getFont().deriveFont(14f));
-        logOutbtn.setFocusPainted(false);
-        logOutbtn.setBorderPainted(false);
-
-        navRightPanel.add(exitbtn);
-        navRightPanel.add(logOutbtn);
         navBarPanel.add(navLeftPanel);
-        navBarPanel.add(navRightPanel);
 
-
-        //Side Nav Bar Panel
-        JPanel SidePanel = new JPanel();
-        SidePanel.setLayout(new BoxLayout(SidePanel, BoxLayout.Y_AXIS));
-        SidePanel.setMaximumSize(new Dimension(100, 1080));
-        SidePanel.setBorder(new EmptyBorder(20,0,20,0));
-        SidePanel.setBackground(new Color(0xD52D5D));
-
-
-        //Side nav bar Icon
+        // Restaurant Logo
         ImageIcon restLogo = new ImageIcon(getClass().getResource("/Images/RestaurantLogo.png"));
-        Image restLogoResize = restLogo.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+        Image restLogoResize = restLogo.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         ImageIcon resizedRestLogo = new ImageIcon(restLogoResize);
         JLabel restIcon = new JLabel(resizedRestLogo);
-        restIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
-        SidePanel.add(restIcon);
+        navLeftPanel.add(restIcon);
 
-        JPanel SideOrdersHistory = new JPanel(new BorderLayout());
-        SideOrdersHistory.setBackground(new Color(106, 111, 187));
-        JLabel SideLabel = new JLabel("     History     ");
-        SideLabel.setFont(SideLabel.getFont().deriveFont(20f));
-        SideLabel.setForeground(Color.BLACK);
-        JLabel SecondSideLabel = new JLabel("     Orders     ");
-        SecondSideLabel.setFont(SecondSideLabel.getFont().deriveFont(20f));
-        SecondSideLabel.setForeground(Color.BLACK);
-        SideOrdersHistory.setMaximumSize(new Dimension(Short.MAX_VALUE, 60));
-        SideOrdersHistory.add(SideLabel, BorderLayout.CENTER);
-        SideOrdersHistory.add(SecondSideLabel, BorderLayout.SOUTH);
-        SideOrdersHistory.setAlignmentX(Component.CENTER_ALIGNMENT);
-        SidePanel.add(SideOrdersHistory);
+        // Company Text
+        JLabel companyText = new JLabel("MyCompany");
+        companyText.setFont(companyText.getFont().deriveFont(24f));
+        companyText.setForeground(Color.BLACK);
+        navLeftPanel.add(companyText);
 
-        //center top panel
-        JPanel centerTopPanel = new JPanel();
-        centerTopPanel.setLayout(new BorderLayout());
-        centerTopPanel.setBackground(new Color(0xE8CEB0));
-        JLabel centerTopLabel = new JLabel("Orders History");
-        centerTopLabel.setFont(centerTopLabel.getFont().deriveFont(24f));
-        centerTopLabel.setForeground(Color.WHITE);
-        centerTopPanel.setBorder(new EmptyBorder(0,0,20,20));
-        centerTopLabel.setBorder(new EmptyBorder(20,20,20,20));
-        centerTopPanel.add(centerTopLabel, BorderLayout.NORTH);
+        // Navbar Right Panel
+        JPanel navRightPanel = new JPanel();
+        navRightPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        navRightPanel.setBorder(new EmptyBorder(0,0,0,20));
+        navRightPanel.setOpaque(false);
+        navBarPanel.add(navRightPanel);
 
-        //center top buttons panel
-        JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
-        buttonsPanel.setOpaque(false);
-        JButton Resetbtn = new JButton("Reset History");
-        Resetbtn.setFont(Resetbtn.getFont().deriveFont(14f));
-        Resetbtn.setForeground(Color.WHITE);
-        Resetbtn.setBackground(Color.RED);
-        Resetbtn.setFocusPainted(false);
-        JButton Exportbtn = new JButton("Export History");
-        Exportbtn.setFont(Exportbtn.getFont().deriveFont(14f));
-        Exportbtn.setForeground(Color.WHITE);
-        Exportbtn.setBackground(Color.GRAY);
-        Exportbtn.setFocusPainted(false);
-        buttonsPanel.add(Resetbtn, BorderLayout.SOUTH);
-        buttonsPanel.add(Exportbtn, BorderLayout.SOUTH);
+        // Back to Control Panel
+        JLabel backMenu = new JLabel("Menu");
+        backMenu.setFont(backMenu.getFont().deriveFont(24f));
+        navRightPanel.add(backMenu);
 
-        centerTopPanel.add(buttonsPanel, BorderLayout.WEST);
+        // Add space between menu and logout 
+        navRightPanel.add(Box.createHorizontalStrut(10));
 
+        // Logout
+        JLabel logOutTxt = new JLabel("Log out");
+        logOutTxt.setFont(logOutTxt.getFont().deriveFont(24f));
+        navRightPanel.add(logOutTxt);
 
-        //center panel
-        JPanel centerPanel = new JPanel();
-        centerPanel.setLayout(new BorderLayout());
-        centerPanel.setBorder(new EmptyBorder(20,20,20,20));
-        centerPanel.setBackground(new Color(0xE8CEB0));
+        // Left panel creation
+        JPanel leftMainPanel = new JPanel();
+        leftMainPanel.setLayout(new BorderLayout());
+        leftMainPanel.setBackground(new Color(0xD52D5D));
+        leftMainPanel.setPreferredSize(new Dimension(150, 668));
+        OrdersHistoryPanel.add(leftMainPanel, BorderLayout.WEST);
 
-        //table creation
+        // Text Panel in LeftPanel
+        JPanel textPanel = new JPanel();
+        textPanel.setLayout(new GridBagLayout());
+        textPanel.setPreferredSize(new Dimension(150,70));
+        textPanel.setBackground(new Color(0xede080));
+        leftMainPanel.add(textPanel, BorderLayout.NORTH);
+
+        // Title text
+        JLabel miniTitle = new JLabel("History");
+        miniTitle.setFont(miniTitle.getFont().deriveFont(24f));
+        textPanel.add(miniTitle);
+
+        // Center Main Panel
+        JPanel centerMainPanel = new JPanel();
+        centerMainPanel.setLayout(new BoxLayout(centerMainPanel, BoxLayout.Y_AXIS));
+        centerMainPanel.setBackground(new Color(0xE8CEB0));
+        OrdersHistoryPanel.add(centerMainPanel, BorderLayout.CENTER);
+
+        // Title Panel
+        JPanel mainTitlePanel = new JPanel();
+        mainTitlePanel.setLayout(new GridLayout(1, 2));
+        mainTitlePanel.setPreferredSize(new Dimension(1216, 70));
+        mainTitlePanel.setOpaque(false);
+        centerMainPanel.add(mainTitlePanel);
+
+        // Main title
+        JLabel mainTitle = new JLabel("Orders History");
+        mainTitle.setFont(mainTitle.getFont().deriveFont(28f));
+        mainTitle.setBorder(new EmptyBorder(0,20,0,0));
+        mainTitlePanel.add(mainTitle);
+
+        // Control Panel
+        JPanel controlPanel = new JPanel();
+        controlPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 0));
+        controlPanel.setPreferredSize(new Dimension(1216, 70));
+        controlPanel.setBorder(new EmptyBorder(12,20,0,0));
+        controlPanel.setOpaque(false);
+        centerMainPanel.add(controlPanel);
+
+        // Buttons
+        JButton resetBtn = new JButton("Reset History");
+        btnCustom(resetBtn);
+        resetBtn.setBackground(new Color(0xFF3131));
+        controlPanel.add(resetBtn);
+
+        JButton exportBtn = new JButton("Export History");
+        btnCustom(exportBtn);
+        exportBtn.setBackground(new Color(0xD9D9D9));
+        controlPanel.add(exportBtn);
+
+        // Table Panel
+        JPanel tablePanel = new JPanel();
+        tablePanel.setLayout(new GridBagLayout());
+        tablePanel.setOpaque(false);
+        centerMainPanel.add(tablePanel);
+
+        // Table Creation
         String[][] data = {};
         String[] ColumnNames={"Item","Type","Quantity","Code","Price"};
         DefaultTableModel model = new DefaultTableModel(data,ColumnNames);
-        JTable ordersTable = new JTable(model);
-        ordersTable.setFont(ordersTable.getFont().deriveFont(16f));
-        ordersTable.getTableHeader().setFont(ordersTable.getTableHeader().getFont().deriveFont(18f));
-        ordersTable.setRowHeight(30);
-        ordersTable.setFillsViewportHeight(true);
-        JScrollPane ordersTableScrollPane = new JScrollPane(ordersTable);
-        ordersTableScrollPane.setPreferredSize(new Dimension(800, 500));
-        centerPanel.setBorder(new EmptyBorder(50,50,50,50));
-        centerPanel.add(centerTopPanel, BorderLayout.NORTH);
-        centerPanel.add(ordersTableScrollPane, BorderLayout.CENTER);
+        JTable table = new JTable(model);
+        table.setFont(table.getFont().deriveFont(16f));
+        table.getTableHeader().setFont(table.getTableHeader().getFont().deriveFont(18f));
+        table.setRowHeight(30);
+        table.setFillsViewportHeight(true);
 
-        OrdersHistoryPanel.add(navBarPanel,BorderLayout.NORTH);
-        OrdersHistoryPanel.add(SidePanel,BorderLayout.WEST);
-        OrdersHistoryPanel.add(centerPanel, BorderLayout.CENTER);
-
+        JScrollPane scroll = new JScrollPane(table);
+        scroll.setPreferredSize(new Dimension(1150, 450));
+        tablePanel.add(scroll, new GridBagConstraints());
 
         add(OrdersHistoryPanel);
-
     }
 
+    private void btnCustom(JButton button){
+        button.setPreferredSize(new Dimension(200,40));
+        button.setFont(button.getFont().deriveFont(18f));
+        button.setFocusable(false);
+        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }
 }
 

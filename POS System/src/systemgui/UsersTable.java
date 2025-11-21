@@ -48,7 +48,7 @@ public class UsersTable extends JPanel{
         JPanel tableMainPanel = new JPanel();
         tableMainPanel.setLayout(new BorderLayout());
 
-       // Nav Bar Panel
+        // Nav Bar Panel
         JPanel navBarPanel = new JPanel();
         navBarPanel.setLayout(new GridLayout(1,2));
         navBarPanel.setMaximumSize(new Dimension(1080, 100));
