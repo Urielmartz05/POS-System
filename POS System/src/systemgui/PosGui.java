@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -32,6 +31,11 @@ public class PosGui extends JPanel {
     
     public static DefaultTableModel model;
     public static JTable table;
+
+    public static JLabel subTotalAmount;
+    public static JLabel taxAmount;
+    public static JLabel totalAmount;
+    public static JLabel payAmount;
 
     public PosGui(){
         initComponents();
@@ -117,9 +121,68 @@ public class PosGui extends JPanel {
 
         // Information Panel
         JPanel infoPanel = new JPanel();
-        infoPanel.setPreferredSize(new Dimension (310,290));
-        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+        infoPanel.setPreferredSize(new Dimension (310,190));
+        infoPanel.setBorder(new EmptyBorder(15,15,15,15));
+        infoPanel.setLayout(new GridLayout(1,2));
         sellInfoPanel.add(infoPanel);
+
+        // Information Text Panel
+        JPanel infoTextPanel = new JPanel();
+        infoTextPanel.setLayout(new BoxLayout(infoTextPanel, BoxLayout.Y_AXIS));
+        infoTextPanel.setBorder(new EmptyBorder(10,5,0,0));
+        infoPanel.add(infoTextPanel);
+
+        // Text Information
+        JLabel subTotalText = new JLabel("Subtotal: ");
+        customInfoText(subTotalText);
+        infoTextPanel.add(subTotalText);
+
+        infoTextPanel.add(Box.createVerticalStrut(5));
+
+        JLabel taxText = new JLabel("Tax: ");
+        customInfoText(taxText);
+        infoTextPanel.add(taxText);
+
+        infoTextPanel.add(Box.createVerticalStrut(5));
+
+        JLabel totalText = new JLabel("Total: ");
+        customInfoText(totalText);
+        infoTextPanel.add(totalText);
+
+        infoTextPanel.add(Box.createVerticalStrut(5));
+
+        JLabel payText = new JLabel("Pay: ");
+        customInfoText(payText);
+        infoTextPanel.add(payText);
+
+        // Amount Panel
+        JPanel amountPanel = new JPanel();
+        amountPanel.setLayout(new BoxLayout(amountPanel, BoxLayout.Y_AXIS));
+        amountPanel.setBorder(new EmptyBorder(10,0,10,0));
+        infoPanel.add(amountPanel);
+
+        // Amount Information
+        subTotalAmount = new JLabel("$ 0.0");
+        customAmountText(subTotalAmount);
+        amountPanel.add(subTotalAmount);
+
+        amountPanel.add(Box.createVerticalStrut(5));
+
+        taxAmount = new JLabel("$ 0.0");
+        customAmountText(taxAmount);
+        amountPanel.add(taxAmount);
+
+        amountPanel.add(Box.createVerticalStrut(5));
+
+        totalAmount = new JLabel("$ 0.0");
+        customAmountText(totalAmount);
+        amountPanel.add(totalAmount);
+
+        amountPanel.add(Box.createVerticalStrut(5));
+
+        payAmount = new JLabel("$ 0.0");
+        customAmountText(payAmount);
+        amountPanel.add(payAmount);
 
         // Center Main Panel
         JPanel centerMainPanel = new JPanel();
@@ -142,7 +205,11 @@ public class PosGui extends JPanel {
         addProductBtn.setBackground(Color.GREEN);
         centerTopPanel.add(addProductBtn);
 
-        addProductBtn.addActionListener(e -> SalesWindows.addProductGui());
+        addProductBtn.addActionListener(e -> {
+            SalesWindows.addProductGui();
+        });
+
+        centerTopPanel.add(Box.createHorizontalStrut(5));
 
         // Delete Product btn
         JButton deleteProductBtn = new JButton("Delete");
@@ -247,6 +314,8 @@ public class PosGui extends JPanel {
 
         });
 
+        bottomRightPanel.add(Box.createHorizontalStrut(5));
+
         JButton payBtn = new JButton("Pay");
         payBtn.setBackground(Color.GREEN);
         btnCustom(payBtn);
@@ -268,6 +337,18 @@ public class PosGui extends JPanel {
         button.setPreferredSize(new Dimension(140, 50));
         button.setFocusable(false);
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }
+
+    private void customInfoText(JLabel label){
+        label.setBorder(new EmptyBorder(0,10,0,0));
+        label.setAlignmentX(LEFT_ALIGNMENT);
+        label.setFont(label.getFont().deriveFont(24f));
+    }
+
+    private void customAmountText(JLabel label){
+        label.setBorder(new EmptyBorder(0,0,0,10));
+        label.setAlignmentX(RIGHT_ALIGNMENT);
+        label.setFont(label.getFont().deriveFont(24f));
     }
 
 }
