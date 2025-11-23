@@ -9,12 +9,14 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.util.HashMap;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -22,10 +24,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import Controller.Authentication;
+import Controller.SalesLogic;
+import Model.Product;
 import main.View;
 
 public class PosGui extends JPanel {
     
+    public static DefaultTableModel model;
+    public static JTable table;
 
     public PosGui(){
         initComponents();
@@ -136,11 +142,15 @@ public class PosGui extends JPanel {
         addProductBtn.setBackground(Color.GREEN);
         centerTopPanel.add(addProductBtn);
 
+        addProductBtn.addActionListener(e -> SalesWindows.addProductGui());
+
         // Delete Product btn
         JButton deleteProductBtn = new JButton("Delete");
         btnCustomControls(deleteProductBtn);
         deleteProductBtn.setBackground(Color.RED);
         centerTopPanel.add(deleteProductBtn);
+
+        deleteProductBtn.addActionListener(e -> SalesLogic.deleteProduct());
         
         // Center bottom panel
         JPanel centerTablePanel = new JPanel();
@@ -151,14 +161,25 @@ public class PosGui extends JPanel {
         // Table Data
         String[] columns = { "ITEM", "CODE", "QUANTITY","PRICE", "TOTAL" };
 
-        Object[][] data = {
-            { 101, "Item 1",  "Admin",    "1234", "1234" },
-            { 102, "Item 2",    "Cashier",  "abcd", "1234" },
-            { 103, "Item 3", "Manager",  "pass", "1234" }
-        };
+        // Product to sell list
+        HashMap<Product, Integer> cart = SalesLogic.cart;
 
-        DefaultTableModel model = new DefaultTableModel(data, columns);
-        JTable table = new JTable(model);
+        // Product
+        Object[][] product = new Object[cart.size()][5];
+
+        int index = 0;
+        for (Product elemt : cart.keySet()) {
+            product[index][0] = elemt.getItem();
+            product[index][1] = elemt.getType();
+            product[index][2] = elemt.getQuantity();
+            product[index][3] = elemt.getPrice();
+            product[index][4] = elemt.getQuantity() * elemt.getPrice();
+            index++;
+        }
+
+        model = new DefaultTableModel(product, columns);
+        
+        table = new JTable(model);
         table.getTableHeader().setFont(table.getFont().deriveFont(20f));
         table.setRowHeight(30);
         table.setFont(table.getFont().deriveFont(16f));
@@ -209,6 +230,22 @@ public class PosGui extends JPanel {
         cancelBtn.setBackground(Color.RED);
         cancelBtn.setForeground(Color.WHITE);
         bottomRightPanel.add(cancelBtn);
+
+        cancelBtn.addActionListener(e -> {
+
+            int answer = JOptionPane.showConfirmDialog(
+                null,
+                "Are you sure you want to cancel?",
+                "Cancel",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (answer == JOptionPane.YES_OPTION) {
+                SalesLogic.deleteAllProducts();
+            }
+
+        });
 
         JButton payBtn = new JButton("Pay");
         payBtn.setBackground(Color.GREEN);

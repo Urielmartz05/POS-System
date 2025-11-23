@@ -28,7 +28,7 @@ import javax.swing.table.DefaultTableModel;
 import Controller.Authentication;
 import GUIHelpers.TextPrompt;
 import Logic.InventoryFileEditor;
-import Model.Inventory;
+import Model.Product;
 
 public class InventoryPanel extends JPanel {
 
@@ -193,7 +193,7 @@ public class InventoryPanel extends JPanel {
 
         // Table Creation
         InventoryFileEditor.dataInitializer();
-        HashMap<Integer,Inventory> inventoryData = InventoryFileEditor.InventoryList;
+        HashMap<Integer,Product> inventoryData = InventoryFileEditor.InventoryList;
 
         // Data store
         String[] columns = {"Item","Type","Quantity","Code","Price"};
@@ -201,12 +201,12 @@ public class InventoryPanel extends JPanel {
 
         int i = 0;
         for (Integer elem : inventoryData.keySet()) {
-            Inventory inventory = inventoryData.get(elem);
-            data[i][0] = inventory.getItem();
-            data[i][1] = inventory.getType();
-            data[i][2] = inventory.getQuantity();
+            Product product = inventoryData.get(elem);
+            data[i][0] = product.getItem();
+            data[i][1] = product.getType();
+            data[i][2] = product.getQuantity();
             data[i][3] = elem;
-            data[i][4] = inventory.getPrice();
+            data[i][4] = product.getPrice();
             i++;
         }
 

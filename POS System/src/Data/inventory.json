@@ -3,18 +3,18 @@
     "item": "banana",
     "type": "fruit",
     "quantity": 10,
-    "price": 10000
+    "price": 10
   },
   "2": {
     "item": "Cereal",
     "type": "cereal type",
     "quantity": 20,
-    "price": 0.0001
+    "price": 5
   },
   "3": {
     "item": "plutonium",
     "type": "metal",
     "quantity": 10000,
-    "price": -1
+    "price": 20
   }
 }

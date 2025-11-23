@@ -1,12 +1,14 @@
 package Model;
 
-public class Inventory {
+public class Product {
+    
     private String item;
     private String type;
     private int quantity;
     private double price;
-    public Inventory(String name, String type, int quantity, double price) {
-        this.item = name;
+
+    public Product(String item, String type, int quantity, double price) {
+        this.item = item;
         this.type = type;
         this.quantity = quantity;
         this.price = price;

@@ -10,11 +10,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import Model.Inventory;
+import Model.Product;
 
 public class InventoryFileEditor {
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    public static HashMap<Integer, Inventory> InventoryList = new HashMap<>();
+    public static HashMap<Integer, Product> InventoryList = new HashMap<>();
 
     public static void dataInitializer() {
         try {
@@ -28,10 +28,10 @@ public class InventoryFileEditor {
     }
 
     //read file
-    private static HashMap<Integer, Inventory> inventoryReader() throws IOException {
+    private static HashMap<Integer, Product> inventoryReader() throws IOException {
         try (InputStream inputStream = InventoryFileEditor.class.getResourceAsStream("/Data/inventory.json")) {
             InputStreamReader reader = new InputStreamReader(inputStream);
-            Type type = new TypeToken<HashMap<Integer, Inventory>>() {}.getType();
+            Type type = new TypeToken<HashMap<Integer, Product>>() {}.getType();
             InventoryList = gson.fromJson(reader, type);
 
         } catch (Exception e) {
