@@ -1,0 +1,175 @@
+package systemgui;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.io.IOException;
+import java.security.PublicKey;
+import java.util.HashMap;
+import Model.Product;
+import Controller.EditInventory;
+import GUIHelpers.TextPrompt;
+public class EditInventoryGuis {
+    public static JTextField itemCodeInput = new JTextField();
+    public static JTextField itemNameInput = new JTextField();
+    public static JTextField itemQuantityInput = new JTextField();
+    public static JTextField itemPriceInput = new JTextField();
+    public static JTextField itemTypeInput = new JTextField();
+
+    public static void createNewItem() {
+        JPanel editPanel = editGui(true);
+        itemCodeInput.setText("");
+        itemNameInput.setText("");
+        itemQuantityInput.setText("");
+        itemPriceInput.setText("");
+
+        int result = JOptionPane.showConfirmDialog(
+                null,
+                editPanel,
+                "New Item",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE
+        );
+        if (result == JOptionPane.OK_OPTION) {
+
+            String code = itemCodeInput.getText();
+            String name = itemNameInput.getText();
+            String type = itemTypeInput.getText();
+            int quantity = Integer.parseInt(itemQuantityInput.getText());
+            double price = Double.parseDouble(itemPriceInput.getText());
+
+            if (code.isEmpty() || name.isEmpty() || quantity < 0 || price < 0) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "All fields are required",
+                        "Validation error!",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
+            else {
+                EditInventory.addNewItem();
+
+            }
+
+        }
+
+    }
+    public static void editItem() {
+
+        JPanel panel = editGui(false);
+
+        // Get specific user information
+        try {
+            HashMap<Integer, Product> inventoryList = EditInventory.readInventoryHashMap();
+
+
+            int selectedRow = InventoryPanel.productTable.getSelectedRow();
+            int selectedColumn = 0;
+            int row = InventoryPanel.productTable.convertRowIndexToModel(selectedRow);
+            Object value = InventoryPanel.productTable.getModel().getValueAt(row, 3);
+
+            // Set data in input fields
+            int itemCode = Integer.parseInt(value.toString());
+            Product inv = inventoryList.get(itemCode);
+
+            // Fill fields with user info
+            itemCodeInput.setText(String.valueOf(itemCode));
+            itemNameInput.setText(inv.getItem());
+
+            // Show Edit User GUI
+            int result = JOptionPane.showConfirmDialog(
+                    null,
+                    panel,
+                    "Update Item Info",
+                    JOptionPane.OK_CANCEL_OPTION,
+                    JOptionPane.PLAIN_MESSAGE
+            );
+
+            if (result == JOptionPane.OK_OPTION) {
+
+                String code = itemCodeInput.getText();
+                String name = itemNameInput.getText();
+                String type = itemTypeInput.getText();
+                int quantity = Integer.parseInt(itemQuantityInput.getText());
+                double price = Double.parseDouble(itemPriceInput.getText());
+
+                if (code.isEmpty() || name.isEmpty()) {
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Please fill blank fields!",
+                            "Update User Info",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                } else {
+                    EditInventory.editItem();
+                }
+            }
+        }
+        catch (IOException e) {
+        }
+    }
+
+    private static JPanel editGui(boolean showCodeField){
+        // Create New User Main Panel
+        JPanel newUserMainPanel = new JPanel();
+        newUserMainPanel.setLayout(new BorderLayout());
+        newUserMainPanel.setPreferredSize(new Dimension(400,300));
+
+        // Title Panel
+        JPanel titlePanel = new JPanel();
+        titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        newUserMainPanel.add(titlePanel, BorderLayout.NORTH);
+
+        // Title text
+        JLabel titleTxt = new JLabel("Enter data below: ");
+        titleTxt.setFont(titleTxt.getFont().deriveFont(18f));
+        titlePanel.add(titleTxt);
+
+        // Information Panel
+        JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+        infoPanel.setBorder(new EmptyBorder(20,0,0,0));
+        newUserMainPanel.add(infoPanel);
+
+        // Input code of Item
+        itemCodeInput = new JTextField();
+        itemCodeInput.setMaximumSize(new Dimension(320,40));
+        new TextPrompt("Code", itemCodeInput);
+
+        if (showCodeField) {
+            infoPanel.add(itemCodeInput);
+            infoPanel.add(Box.createVerticalStrut(20));
+        }
+
+        // Input name of item
+        itemNameInput = new JTextField();
+        itemNameInput.setMaximumSize(new Dimension(320,40));
+        infoPanel.add(itemNameInput);
+        new TextPrompt("Name", itemNameInput);
+        infoPanel.add(Box.createVerticalStrut(20));
+
+        // Input type of item
+        itemTypeInput = new JTextField();
+        itemTypeInput.setMaximumSize(new Dimension(320,40));
+        infoPanel.add(itemTypeInput);
+        new TextPrompt("Type", itemTypeInput);
+        infoPanel.add(Box.createVerticalStrut(20));
+
+
+        // Input quantity of item
+        itemQuantityInput = new JTextField();
+        itemQuantityInput.setMaximumSize(new Dimension(320,40));
+        infoPanel.add(itemQuantityInput);
+        new TextPrompt("Quantity", itemQuantityInput);
+        infoPanel.add(Box.createVerticalStrut(20));
+
+        //Input price of item
+        itemPriceInput = new JTextField();
+        itemPriceInput.setMaximumSize(new Dimension(320,40));
+        infoPanel.add(itemPriceInput);
+        new TextPrompt("Price", itemPriceInput);
+        infoPanel.add(Box.createVerticalStrut(20));
+
+        return newUserMainPanel;
+    }
+}
