@@ -1,7 +1,9 @@
 package Controller;
 
+import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Writer;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 
@@ -9,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import Model.Product;
@@ -55,6 +58,51 @@ public class SalesLogic {
         // Add to Subtotal
         amountSetter();
 
+    }
+
+    public static void inventoryModifier(){
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        // Read Inventory
+        HashMap<Integer, Product> inventory = inventoryReader();
+
+        //Get table data
+        DefaultTableModel model = PosGui.model;
+
+        // Get data from inventory
+        int codeColumn = 1;
+        int quantityColumn = 2;
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+
+            Object codes = model.getValueAt(i, codeColumn);
+            Object quantities = model.getValueAt(i, quantityColumn);
+
+            int code = Integer.parseInt(codes.toString());
+            int quantity = Integer.parseInt(quantities.toString());
+
+
+            for (Integer item : inventory.keySet()) {
+
+                Product product = inventory.get(code);
+                
+                if (code == item) {
+                    int newProductQuantity = 0;
+                    newProductQuantity = product.getQuantity() - quantity;
+                    product.setQuantity(newProductQuantity);
+
+                    inventory.put(item, product);
+                }
+            }
+
+            // Update data in inventory Json
+            try (Writer writer = new FileWriter("POS System/src/Data/inventory.json")) {
+                gson.toJson(inventory, writer);
+            } catch (Exception e) {
+                e.getStackTrace();
+            }
+        }
     }
 
     public static void deleteProduct(){

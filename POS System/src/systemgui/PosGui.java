@@ -322,6 +322,24 @@ public class PosGui extends JPanel {
         payBtn.setForeground(Color.WHITE);
         bottomRightPanel.add(payBtn);
 
+        payBtn.addActionListener(e -> {
+
+            int answer = JOptionPane.showConfirmDialog(
+                null,
+                "Do you want to pay?",
+                "Payment",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (answer == JOptionPane.YES_OPTION) {
+                SalesLogic.inventoryModifier();
+
+                JOptionPane.showMessageDialog(null, "Payment successfully completed!");
+
+            }
+        });
+
         add(tableMainPanel);
     }
 
