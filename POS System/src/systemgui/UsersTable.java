@@ -9,8 +9,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.HashMap;
 
 import javax.swing.Box;
@@ -251,7 +249,6 @@ public class UsersTable extends JPanel{
         table.getTableHeader().setFont(table.getTableHeader().getFont().deriveFont(18f));
         table.setRowHeight(30);
         table.setFillsViewportHeight(true);
-        
 
         JScrollPane scroll = new JScrollPane(table);
         scroll.setPreferredSize(new Dimension(1150, 450));

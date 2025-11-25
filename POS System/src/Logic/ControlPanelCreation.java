@@ -18,15 +18,15 @@ import systemgui.PosGui;
 
 public class ControlPanelCreation {
 
-    public static int btnNumber = ControlPanel.btnNumber;
+
     private JButton[] btnPanel;
 
 
     public JButton[] generateAdminPanel(){
 
         // Create Buttons Panel
-        btnPanel = new JButton[btnNumber];
         String[] texts = {"Manage Users", "Inventory", "Orders History", "Close Operations"};
+        btnPanel = new JButton[texts.length];
         String[] path = {"/Images/UserIcon.png", "/Images/AdminImages/Inventory.png", "/Images/AdminImages/Orders.png", "/Images/AdminImages/Close.png"};
         buttonEstablisher(btnPanel, texts, path);
 
@@ -57,8 +57,8 @@ public class ControlPanelCreation {
 
     public JButton[] generateUserPanel(){
 
-        btnPanel = new JButton[btnNumber];
         String[] texts = {"Enter to Sales", "Orders History", "Close Operations"};
+        btnPanel = new JButton[texts.length];
         String[] path = {"/Images/AdminImages/EnterSales.png", "/Images/AdminImages/Inventory.png", "/Images/AdminImages/Close.png"};
         buttonEstablisher(btnPanel, texts, path);
 

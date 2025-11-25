@@ -34,6 +34,10 @@ public class EditUsers {
         String role = (String) EditUsersGuis.roleBox.getSelectedItem();
         String password = new String(EditUsersGuis.passwordInput.getPassword());
 
+        if (usersList.containsKey(code)) {
+            return;
+        }
+
         Users newUser = new Users(password, name, role);
         usersList.put(code, newUser);
 

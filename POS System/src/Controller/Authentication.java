@@ -1,6 +1,5 @@
 package Controller;
 
-import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.InputStream;
@@ -17,6 +16,7 @@ import com.google.gson.reflect.TypeToken;
 
 import Model.Users;
 import main.View;
+import systemgui.ControlPanel;
 import systemgui.LogIn;
 
 public class Authentication {
@@ -45,7 +45,6 @@ public class Authentication {
         } catch (Exception e) {
             System.out.print(e.getMessage());
         }
-
         return correctUser;
     }
 
@@ -67,14 +66,9 @@ public class Authentication {
                     View.superMainLayout.show(View.superMainPanel, "LogIn");
                     LogIn.emailInput.setText("");
                     LogIn.passwordInput.setText("");
+                    ControlPanel.btnNumber = 0;
                 }
-
             }   
-
         });
     }
-
-
-    
-
 }

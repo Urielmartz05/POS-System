@@ -1,17 +1,12 @@
 {
-  "1": {
-    "password": ".",
-    "name": "Scobby",
-    "role": "Admin"
-  },
   "4545": {
     "password": "paz",
     "name": "Juan",
     "role": "Admin"
   },
-  "1234": {
-    "password": "bueno",
-    "name": "Ximena",
+  "2": {
+    "password": ".",
+    "name": "Maria",
     "role": "Admin"
   }
 }

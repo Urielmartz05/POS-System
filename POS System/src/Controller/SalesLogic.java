@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Writer;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JOptionPane;
@@ -14,6 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import Model.Order;
 import Model.Product;
 import systemgui.PosGui;
 import systemgui.SalesWindows;
@@ -21,6 +23,7 @@ import systemgui.SalesWindows;
 public class SalesLogic {
 
     public static HashMap<Product, Integer> cart = new HashMap<>();
+    public static ArrayList<Order> orders = new ArrayList<>();
 
     private static float subTotal = 0;
     private static float tax = 0;
@@ -83,17 +86,14 @@ public class SalesLogic {
             int quantity = Integer.parseInt(quantities.toString());
 
 
-            for (Integer item : inventory.keySet()) {
-
+            if (inventory.containsKey(code)) {
                 Product product = inventory.get(code);
-                
-                if (code == item) {
-                    int newProductQuantity = 0;
-                    newProductQuantity = product.getQuantity() - quantity;
-                    product.setQuantity(newProductQuantity);
+                int newProductQuantity = product.getQuantity() - quantity;
+                product.setQuantity(newProductQuantity);
+                inventory.put(code, product);
 
-                    inventory.put(item, product);
-                }
+                Order order = new Order(product.getItem(), quantity, product.getPrice(), quantity * product.getPrice());
+                orders.add(order);
             }
 
             // Update data in inventory Json
@@ -102,7 +102,11 @@ public class SalesLogic {
             } catch (Exception e) {
                 e.getStackTrace();
             }
+
         }
+        
+        OrdersHistory.ordersHistory();
+        orders.clear();
     }
 
     public static void deleteProduct(){
@@ -170,7 +174,7 @@ public class SalesLogic {
 
     }
 
-    private static HashMap<Integer, Product> inventoryReader(){
+    public static HashMap<Integer, Product> inventoryReader(){
         
         HashMap<Integer, Product> inventory = new HashMap<>();
 

@@ -9,6 +9,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -22,10 +24,15 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import Controller.Authentication;
+import Controller.OrdersHistory;
+import Controller.SalesLogic;
+import Model.Order;
 
 public class OrdersHistoryPanel extends JPanel {
 
     public static JPanel OrdersHistoryPanel;
+    public static DefaultTableModel model;
+    public static JTable table;
 
     public OrdersHistoryPanel() {
         initComponents();
@@ -156,10 +163,24 @@ public class OrdersHistoryPanel extends JPanel {
         centerMainPanel.add(tablePanel);
 
         // Table Creation
-        String[][] data = {};
-        String[] ColumnNames={"Item","Type","Quantity","Code","Price"};
-        DefaultTableModel model = new DefaultTableModel(data,ColumnNames);
-        JTable table = new JTable(model);
+        ArrayList<Order> orders = OrdersHistory.ordersReader();
+        Object[][] data = new Object[orders.size()][5];
+
+        int i = 0;
+        for (Order order : orders) {
+            data[i][0] = i + 1; // Using index as code/ID for now since we don't have a unique ID in Order
+            data[i][1] = order.getProduct();
+            data[i][2] = order.getQuantity();
+            data[i][3] = order.getPrice();
+            data[i][4] = order.getTotal();
+            i++;
+        }
+
+        String[] ColumnNames={"Code","Item","Quantity","Price","Total"};
+
+        model = new DefaultTableModel(data ,ColumnNames);
+
+        table = new JTable(model);
         table.setFont(table.getFont().deriveFont(16f));
         table.getTableHeader().setFont(table.getTableHeader().getFont().deriveFont(18f));
         table.setRowHeight(30);

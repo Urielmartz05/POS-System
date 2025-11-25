@@ -277,6 +277,10 @@ public class PosGui extends JPanel {
 
         exitBtn.addActionListener(e -> {
             View.superMainLayout.show(View.superMainPanel, "ControlPanel");
+
+            SalesLogic.cart.clear();
+            DefaultTableModel model = (DefaultTableModel) PosGui.table.getModel();
+            model.setRowCount(0);
         });
 
         JButton manualSearchBtn = new JButton("Search");
@@ -334,9 +338,7 @@ public class PosGui extends JPanel {
 
             if (answer == JOptionPane.YES_OPTION) {
                 SalesLogic.inventoryModifier();
-
                 JOptionPane.showMessageDialog(null, "Payment successfully completed!");
-
             }
         });
 

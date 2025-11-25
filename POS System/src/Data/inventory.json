@@ -2,7 +2,7 @@
   "1": {
     "item": "banana",
     "type": "fruit",
-    "quantity": 10,
+    "quantity": 5,
     "price": 10.0
   },
   "2": {
@@ -14,7 +14,7 @@
   "3": {
     "item": "plutonium",
     "type": "metal",
-    "quantity": 10000,
+    "quantity": 9997,
     "price": 20.0
   }
 }

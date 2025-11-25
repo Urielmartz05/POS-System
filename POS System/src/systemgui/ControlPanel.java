@@ -17,9 +17,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.text.*;
 
 import Controller.Authentication;
+import Controller.OrdersHistory;
 import Logic.ControlPanelCreation;
 import Model.Users;
 import main.View;
@@ -126,8 +126,9 @@ public class ControlPanel extends JPanel {
             });
             adminBtns[2].addActionListener(e -> {
                 OrdersHistoryPanel orders = new OrdersHistoryPanel();
-                View.superMainPanel.add(orders,"Inventory");
-                View.superMainLayout.show(View.superMainPanel, "Inventory");
+                OrdersHistory.ordersHistory();
+                View.superMainPanel.add(orders,"Orders");
+                View.superMainLayout.show(View.superMainPanel, "Orders");
             });
 
         }
@@ -141,6 +142,19 @@ public class ControlPanel extends JPanel {
             for (int i = 0; i < usersBtns.length; i++) {
                 btnsContainer.add(usersBtns[i]);
             }
+
+            usersBtns[0].addActionListener(e -> {
+                PosGui pos = new PosGui();
+                View.superMainPanel.add(pos, "Pos");
+                View.superMainLayout.show(View.superMainPanel, "Pos");
+            });
+
+            usersBtns[1].addActionListener(e -> {
+                OrdersHistoryPanel orders = new OrdersHistoryPanel();
+                View.superMainPanel.add(orders, "Orders");
+                View.superMainLayout.show(View.superMainPanel, "Orders");
+            });
+
         }
 
         add(controlPanelMainPanel);

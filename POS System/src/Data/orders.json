@@ -1,0 +1,20 @@
+[
+  {
+    "product": "banana",
+    "quantity": 1,
+    "price": 10.0,
+    "total": 10.0
+  },
+  {
+    "product": "banana",
+    "quantity": 1,
+    "price": 10.0,
+    "total": 10.0
+  },
+  {
+    "product": "plutonium",
+    "quantity": 1,
+    "price": 20.0,
+    "total": 20.0
+  }
+]

@@ -58,12 +58,17 @@ public class EditUsersGuis {
             }
 
             else {
+                HashMap<Integer, Users> usersList = EditUsers.readUserHashMap();
+
+                if (usersList.containsKey(Integer.valueOf(code))) {
+                    JOptionPane.showMessageDialog(null, "Code not available");
+                    return;
+                }
+
                 EditUsers.addNewUser();
                 UsersTable.model.addRow(new Object[]{ code, name, role, password });
             }
-
         }
-
     } 
 
     // EditUsers.editUsersInfo();
