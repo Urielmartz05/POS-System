@@ -35,10 +35,10 @@ public class EditInventoryGuis {
             String code = itemCodeInput.getText();
             String name = itemNameInput.getText();
             String type = itemTypeInput.getText();
-            int quantity = Integer.parseInt(itemQuantityInput.getText());
-            double price = Double.parseDouble(itemPriceInput.getText());
+            if (!itemQuantityInput.getText().isEmpty()) {int quantity = Integer.parseInt(itemQuantityInput.getText());}
+            if (!itemPriceInput.getText().isEmpty()) { double price = Double.parseDouble(itemPriceInput.getText());}
 
-            if (code.isEmpty() || name.isEmpty() || quantity < 0 || price < 0) {
+            if (code.isEmpty() || name.isEmpty() ||  type.isEmpty()|| itemQuantityInput.getText().isEmpty() || itemPriceInput.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(
                         null,
                         "All fields are required",
@@ -90,10 +90,10 @@ public class EditInventoryGuis {
                 String code = itemCodeInput.getText();
                 String name = itemNameInput.getText();
                 String type = itemTypeInput.getText();
-                int quantity = Integer.parseInt(itemQuantityInput.getText());
-                double price = Double.parseDouble(itemPriceInput.getText());
+                if (!itemQuantityInput.getText().isEmpty()) {int quantity = Integer.parseInt(itemQuantityInput.getText());}
+                if (!itemPriceInput.getText().isEmpty()) { double price = Double.parseDouble(itemPriceInput.getText());}
 
-                if (code.isEmpty() || name.isEmpty()) {
+                if (code.isEmpty() || name.isEmpty() || type.isEmpty()|| itemQuantityInput.getText().isEmpty() || itemPriceInput.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(
                             null,
                             "Please fill blank fields!",
