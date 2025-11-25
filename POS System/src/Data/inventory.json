@@ -2,19 +2,19 @@
   "1": {
     "item": "banana",
     "type": "fruit",
-    "quantity": 5,
+    "quantity": 4.5,
     "price": 10.0
   },
   "2": {
     "item": "Cereal",
     "type": "cereal type",
-    "quantity": 20,
+    "quantity": 20.0,
     "price": 5.0
   },
   "3": {
     "item": "plutonium",
     "type": "metal",
-    "quantity": 9997,
+    "quantity": 9997.0,
     "price": 20.0
   }
 }

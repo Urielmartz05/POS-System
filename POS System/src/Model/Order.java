@@ -3,11 +3,11 @@ package Model;
 public class Order {
 
     private String product;
-    private int quantity;
+    private Float quantity;
     private double price;
     private double total;
 
-    public Order(String product, int quantity, double price, double total) {
+    public Order(String product, Float quantity, double price, double total) {
         this.product = product;
         this.quantity = quantity;
         this.price = price;
@@ -22,11 +22,11 @@ public class Order {
         this.product = product;
     }
 
-    public int getQuantity() {
+    public Float getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Float quantity) {
         this.quantity = quantity;
     }
 

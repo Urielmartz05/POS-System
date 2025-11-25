@@ -229,7 +229,7 @@ public class PosGui extends JPanel {
         String[] columns = { "ITEM", "CODE", "QUANTITY","PRICE", "TOTAL" };
 
         // Product to sell list
-        HashMap<Product, Integer> cart = SalesLogic.cart;
+        HashMap<Product, Float> cart = SalesLogic.cart;
 
         // Product
         Object[][] product = new Object[cart.size()][5];

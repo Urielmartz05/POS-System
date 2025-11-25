@@ -1,20 +1,26 @@
 [
   {
     "product": "banana",
-    "quantity": 1,
+    "quantity": 1.0,
     "price": 10.0,
     "total": 10.0
   },
   {
     "product": "banana",
-    "quantity": 1,
+    "quantity": 1.0,
     "price": 10.0,
     "total": 10.0
   },
   {
     "product": "plutonium",
-    "quantity": 1,
+    "quantity": 1.0,
     "price": 20.0,
     "total": 20.0
+  },
+  {
+    "product": "banana",
+    "quantity": 0.5,
+    "price": 10.0,
+    "total": 5.0
   }
 ]

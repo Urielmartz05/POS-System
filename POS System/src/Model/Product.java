@@ -4,10 +4,10 @@ public class Product {
     
     private String item;
     private String type;
-    private int quantity;
+    private Float quantity;
     private double price;
 
-    public Product(String item, String type, int quantity, double price) {
+    public Product(String item, String type, Float quantity, double price) {
         this.item = item;
         this.type = type;
         this.quantity = quantity;
@@ -30,11 +30,11 @@ public class Product {
         this.type = type;
     }
 
-    public int getQuantity() {
+    public Float getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Float quantity) {
         this.quantity = quantity;
     }
 

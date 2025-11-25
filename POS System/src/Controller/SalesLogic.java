@@ -22,7 +22,7 @@ import systemgui.SalesWindows;
 
 public class SalesLogic {
 
-    public static HashMap<Product, Integer> cart = new HashMap<>();
+    public static HashMap<Product, Float> cart = new HashMap<>();
     public static ArrayList<Order> orders = new ArrayList<>();
 
     private static float subTotal = 0;
@@ -37,7 +37,7 @@ public class SalesLogic {
 
         // Get data from sales window
         String productCode = SalesWindows.productCodeField.getText();
-        int productQuantity = Integer.parseInt(SalesWindows.productQuantityField.getText());
+        Float productQuantity = Float.parseFloat(SalesWindows.productQuantityField.getText());
 
         // Validate if product exists
         if (!inventory.containsKey(Integer.parseInt(productCode)) || inventory.get(Integer.parseInt(productCode)).getQuantity() < productQuantity) {
@@ -83,12 +83,12 @@ public class SalesLogic {
             Object quantities = model.getValueAt(i, quantityColumn);
 
             int code = Integer.parseInt(codes.toString());
-            int quantity = Integer.parseInt(quantities.toString());
+            Float quantity = Float.valueOf(quantities.toString());
 
 
             if (inventory.containsKey(code)) {
                 Product product = inventory.get(code);
-                int newProductQuantity = product.getQuantity() - quantity;
+                Float newProductQuantity = product.getQuantity() - quantity;
                 product.setQuantity(newProductQuantity);
                 inventory.put(code, product);
 
