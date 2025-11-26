@@ -130,6 +130,9 @@ public class ControlPanel extends JPanel {
                 View.superMainPanel.add(orders,"Orders");
                 View.superMainLayout.show(View.superMainPanel, "Orders");
             });
+            adminBtns[3].addActionListener(e -> {
+                CloseOperations.closeOperations();
+            });
 
         }
 

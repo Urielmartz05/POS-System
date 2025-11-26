@@ -92,7 +92,7 @@ public class SalesLogic {
                 product.setQuantity(newProductQuantity);
                 inventory.put(code, product);
 
-                Order order = new Order(product.getItem(), quantity, product.getPrice(), quantity * product.getPrice());
+                Order order = new Order(product.getItem(), product.getType(), quantity, product.getPrice(), quantity * product.getPrice());
                 orders.add(order);
             }
 

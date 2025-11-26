@@ -164,19 +164,20 @@ public class OrdersHistoryPanel extends JPanel {
 
         // Table Creation
         ArrayList<Order> orders = OrdersHistory.ordersReader();
-        Object[][] data = new Object[orders.size()][5];
+        Object[][] data = new Object[orders.size()][6];
 
         int i = 0;
         for (Order order : orders) {
             data[i][0] = i + 1; // Using index as code/ID for now since we don't have a unique ID in Order
             data[i][1] = order.getProduct();
-            data[i][2] = order.getQuantity();
-            data[i][3] = order.getPrice();
-            data[i][4] = order.getTotal();
+            data[i][2] = order.getType();
+            data[i][3] = order.getQuantity();
+            data[i][4] = order.getPrice();
+            data[i][5] = order.getTotal();
             i++;
         }
 
-        String[] ColumnNames={"Code","Item","Quantity","Price","Total"};
+        String[] ColumnNames={"Code","Item","Type","Quantity","Price","Total"};
 
         model = new DefaultTableModel(data ,ColumnNames);
 

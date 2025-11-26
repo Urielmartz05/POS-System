@@ -1,24 +1,28 @@
 [
   {
     "product": "banana",
+    "type": "kg",
     "quantity": 1.0,
     "price": 10.0,
     "total": 10.0
   },
   {
     "product": "banana",
+    "type": "kg",
     "quantity": 1.0,
     "price": 10.0,
     "total": 10.0
   },
   {
     "product": "plutonium",
+    "type": "kg",
     "quantity": 1.0,
     "price": 20.0,
     "total": 20.0
   },
   {
     "product": "banana",
+    "type": "kg",
     "quantity": 0.5,
     "price": 10.0,
     "total": 5.0
