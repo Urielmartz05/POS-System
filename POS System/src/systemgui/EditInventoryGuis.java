@@ -1,22 +1,32 @@
 package systemgui;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.io.IOException;
-import java.security.PublicKey;
 import java.util.HashMap;
-import Model.Product;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
 import Controller.EditInventory;
 import GUIHelpers.TextPrompt;
+import Model.Product;
 public class EditInventoryGuis {
     public static JTextField itemCodeInput = new JTextField();
     public static JTextField itemNameInput = new JTextField();
     public static JTextField itemQuantityInput = new JTextField();
     public static JTextField itemPriceInput = new JTextField();
-    public static JTextField itemTypeInput = new JTextField();
+    public static JComboBox<String> itemTypeInput;
 
     public static void createNewItem() {
+        
         JPanel editPanel = editGui(true);
         itemCodeInput.setText("");
         itemNameInput.setText("");
@@ -30,11 +40,12 @@ public class EditInventoryGuis {
                 JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.PLAIN_MESSAGE
         );
+
         if (result == JOptionPane.OK_OPTION) {
 
             String code = itemCodeInput.getText();
             String name = itemNameInput.getText();
-            String type = itemTypeInput.getText();
+            String type = (String) itemTypeInput.getSelectedItem();
             if (!itemQuantityInput.getText().isEmpty()) {int quantity = Integer.parseInt(itemQuantityInput.getText());}
             if (!itemPriceInput.getText().isEmpty()) { double price = Double.parseDouble(itemPriceInput.getText());}
 
@@ -89,7 +100,7 @@ public class EditInventoryGuis {
 
                 String code = itemCodeInput.getText();
                 String name = itemNameInput.getText();
-                String type = itemTypeInput.getText();
+                String type = (String) itemTypeInput.getSelectedItem();
                 if (!itemQuantityInput.getText().isEmpty()) {int quantity = Integer.parseInt(itemQuantityInput.getText());}
                 if (!itemPriceInput.getText().isEmpty()) { double price = Double.parseDouble(itemPriceInput.getText());}
 
@@ -148,13 +159,14 @@ public class EditInventoryGuis {
         new TextPrompt("Name", itemNameInput);
         infoPanel.add(Box.createVerticalStrut(20));
 
-        // Input type of item
-        itemTypeInput = new JTextField();
+
+        // Type of product
+        String[] types = {"Unit", "Kg"};
+        itemTypeInput = new JComboBox<>(types);
         itemTypeInput.setMaximumSize(new Dimension(320,40));
         infoPanel.add(itemTypeInput);
-        new TextPrompt("Type", itemTypeInput);
-        infoPanel.add(Box.createVerticalStrut(20));
 
+        infoPanel.add(Box.createVerticalStrut(20));
 
         // Input quantity of item
         itemQuantityInput = new JTextField();
@@ -162,6 +174,7 @@ public class EditInventoryGuis {
         infoPanel.add(itemQuantityInput);
         new TextPrompt("Quantity", itemQuantityInput);
         infoPanel.add(Box.createVerticalStrut(20));
+
 
         //Input price of item
         itemPriceInput = new JTextField();

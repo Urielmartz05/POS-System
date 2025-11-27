@@ -10,6 +10,7 @@ public class Order {
 
     public Order(String product, String type, Float quantity, double price, double total) {
         this.product = product;
+        this.type = type;
         this.quantity = quantity;
         this.price = price;
         this.total = total;

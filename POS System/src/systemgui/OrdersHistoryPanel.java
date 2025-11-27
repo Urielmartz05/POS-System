@@ -151,11 +151,6 @@ public class OrdersHistoryPanel extends JPanel {
         resetBtn.setBackground(new Color(0xFF3131));
         controlPanel.add(resetBtn);
 
-        JButton exportBtn = new JButton("Export History");
-        btnCustom(exportBtn);
-        exportBtn.setBackground(new Color(0xD9D9D9));
-        controlPanel.add(exportBtn);
-
         // Table Panel
         JPanel tablePanel = new JPanel();
         tablePanel.setLayout(new GridBagLayout());

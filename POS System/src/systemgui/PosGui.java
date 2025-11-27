@@ -328,18 +328,35 @@ public class PosGui extends JPanel {
 
         payBtn.addActionListener(e -> {
 
-            int answer = JOptionPane.showConfirmDialog(
+            DefaultTableModel model = (DefaultTableModel) PosGui.table.getModel();
+
+            if (model.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(
+                    null, 
+                    "Nothing to pay!",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+
+            else{
+
+                int answer = JOptionPane.showConfirmDialog(
                 null,
                 "Do you want to pay?",
                 "Payment",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE
-            );
 
-            if (answer == JOptionPane.YES_OPTION) {
-                SalesLogic.inventoryModifier();
-                JOptionPane.showMessageDialog(null, "Payment successfully completed!");
+                );
+
+                if (answer == JOptionPane.YES_OPTION) {
+                    SalesLogic.inventoryModifier();
+                    SalesLogic.deleteAllProducts();
+                    JOptionPane.showMessageDialog(null, "Payment successfully completed!");
+                }
             }
+        
         });
 
         add(tableMainPanel);

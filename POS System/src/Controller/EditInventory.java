@@ -1,22 +1,30 @@
 package Controller;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Writer;
 import java.lang.reflect.Type;
-import java.sql.SQLOutput;
 import java.util.HashMap;
-import Model.Product;
-import Logic.InventoryFileEditor;
-import systemgui.EditInventoryGuis;
-import systemgui.InventoryPanel;
+
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableModel;
+import Model.Product;
+import systemgui.EditInventoryGuis;
+import systemgui.InventoryPanel;
 
 public class EditInventory {
+    
     public static int itemSelectedRow;
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static HashMap<Integer,Product> inventoryList;
@@ -29,10 +37,10 @@ public class EditInventory {
             throw new RuntimeException(e);
         }
         int code = Integer.parseInt(EditInventoryGuis.itemCodeInput.getText());
-            String name= EditInventoryGuis.itemNameInput.getText();
-            int quantity= Integer.parseInt(EditInventoryGuis.itemQuantityInput.getText());
-            double price = Double.parseDouble(EditInventoryGuis.itemPriceInput.getText());
-            String type= EditInventoryGuis.itemTypeInput.getText();
+        String name= EditInventoryGuis.itemNameInput.getText();
+        Float quantity= Float.valueOf(EditInventoryGuis.itemQuantityInput.getText());
+        Float price = Float.valueOf(EditInventoryGuis.itemPriceInput.getText());
+        String type= (String) EditInventoryGuis.itemTypeInput.getSelectedItem();
 
         Product newItem= new Product(name,type,quantity,price);
         inventoryList.put(code,newItem);
@@ -62,9 +70,9 @@ public class EditInventory {
 
         // Get data from EditInventoryGuis
         String itemName = EditInventoryGuis.itemNameInput.getText();
-        String type = EditInventoryGuis.itemTypeInput.getText();
+        String type= (String) EditInventoryGuis.itemTypeInput.getSelectedItem();
         if (itemName.isEmpty()) return;
-        int quantity = Integer.parseInt(EditInventoryGuis.itemQuantityInput.getText());
+        Float quantity = Float.valueOf(EditInventoryGuis.itemQuantityInput.getText());
         double price = Double.parseDouble(EditInventoryGuis.itemPriceInput.getText());
 
         // Update information

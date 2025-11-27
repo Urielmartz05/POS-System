@@ -1,20 +1,26 @@
 {
   "1": {
     "item": "banana",
-    "type": "fruit",
+    "type": "Kg",
     "quantity": 3.5,
     "price": 10.0
   },
   "2": {
     "item": "Cereal",
-    "type": "cereal type",
+    "type": "Unit",
     "quantity": 20.0,
     "price": 5.0
   },
   "3": {
     "item": "plutonium",
-    "type": "metal",
+    "type": "Unit",
     "quantity": 9997.0,
     "price": 20.0
+  },
+  "4": {
+    "item": "Water",
+    "type": "Unit",
+    "quantity": 7.0,
+    "price": 5.0
   }
 }
