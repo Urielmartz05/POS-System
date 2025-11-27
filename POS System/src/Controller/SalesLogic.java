@@ -123,7 +123,7 @@ public class SalesLogic {
 
             // Get product code
             String productName = PosGui.table.getValueAt(row, 0).toString();
-            int productQuantity = Integer.parseInt(PosGui.table.getValueAt(row, 2).toString());
+            Float productQuantity = Float.valueOf(PosGui.table.getValueAt(row, 2).toString());
             
             // Search item to delete
             for (Product item : cart.keySet()) {
