@@ -2,7 +2,7 @@
   "1": {
     "item": "banana",
     "type": "Kg",
-    "quantity": 3.5,
+    "quantity": 1.5,
     "price": 10.0
   },
   "2": {
@@ -20,7 +20,13 @@
   "4": {
     "item": "Water",
     "type": "Unit",
-    "quantity": 7.0,
+    "quantity": 6.0,
     "price": 5.0
+  },
+  "28": {
+    "item": "coca",
+    "type": "Unit",
+    "quantity": 9.0,
+    "price": 20.0
   }
 }

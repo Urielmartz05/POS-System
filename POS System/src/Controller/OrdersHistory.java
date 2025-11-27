@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.io.Writer;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -62,6 +61,21 @@ public class OrdersHistory {
         }
 
         return orders;
+    }
+
+    public static void ordersReset(){
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        try (Writer writer = new FileWriter("POS System/src/Data/orders.json")) {
+            gson.toJson(new ArrayList<Order>(), writer);
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+
+        DefaultTableModel model = (DefaultTableModel) OrdersHistoryPanel.table.getModel();
+        model.setRowCount(0);
+
     }
 
 }

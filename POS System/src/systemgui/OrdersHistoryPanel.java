@@ -10,7 +10,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -25,7 +24,6 @@ import javax.swing.table.DefaultTableModel;
 
 import Controller.Authentication;
 import Controller.OrdersHistory;
-import Controller.SalesLogic;
 import Model.Order;
 
 public class OrdersHistoryPanel extends JPanel {
@@ -151,6 +149,11 @@ public class OrdersHistoryPanel extends JPanel {
         resetBtn.setBackground(new Color(0xFF3131));
         controlPanel.add(resetBtn);
 
+    
+        resetBtn.addActionListener(e -> {
+            OrdersHistory.ordersReset();
+        });
+
         // Table Panel
         JPanel tablePanel = new JPanel();
         tablePanel.setLayout(new GridBagLayout());
@@ -172,7 +175,7 @@ public class OrdersHistoryPanel extends JPanel {
             i++;
         }
 
-        String[] ColumnNames={"Code","Item","Type","Quantity","Price","Total"};
+        String[] ColumnNames={"Order Number","Item","Type","Quantity","Price","Total"};
 
         model = new DefaultTableModel(data ,ColumnNames);
 
