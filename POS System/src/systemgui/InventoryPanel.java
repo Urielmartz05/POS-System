@@ -10,6 +10,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.io.IOException;
 import java.util.HashMap;
 
 import javax.swing.Box;
@@ -30,9 +31,15 @@ import GUIHelpers.TextPrompt;
 import Logic.InventoryFileEditor;
 import Model.Product;
 
+import Logic.InventoryFileEditor;
+import Controller.EditInventory;
+import GUIHelpers.TextPrompt;
+
 public class InventoryPanel extends JPanel {
 
     public static JPanel InventoryPanel;
+    public static DefaultTableModel invModel;
+    public static JTable productTable;
 
     public InventoryPanel() {
         initComponents();
@@ -161,26 +168,64 @@ public class InventoryPanel extends JPanel {
         JButton addBtn = new JButton("Add Product");
         btnCustom(addBtn);
         addBtn.setBackground(new Color(0x0CCDF));
+        addBtn.addActionListener(evt ->{
+            EditInventoryGuis.createNewItem();
+        });
         controlPanel.add(addBtn);
 
         JButton updateBtn = new JButton("Update");
         btnCustom(updateBtn);
         updateBtn.setBackground(new Color(0xD9D9D9));
+        updateBtn.addActionListener(evt -> {
+
+            if (productTable.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Please select a Product!",
+                        "Update Product Info",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
+            else{
+                EditInventoryGuis.editItem();
+            }
+
+
+        });
         controlPanel.add(updateBtn);
 
         JButton deleteBtn = new JButton("Delete");
         btnCustom(deleteBtn);
         deleteBtn.setBackground(new Color(0xFF3131));
+        deleteBtn.addActionListener(evt -> {
+            if (productTable.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Please select a Product!",
+                        "Delete Product Info",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
+            else{
+                EditInventory.deleteItem();
+            }
+        });
         controlPanel.add(deleteBtn);
 
         JButton importBtn = new JButton("Import");
         btnCustom(importBtn);
         importBtn.setBackground(new Color(0xD9D9D9));
+        importBtn.addActionListener(e -> {
+            EditInventory.ImportInventory();
+        });
         controlPanel.add(importBtn);
 
         JButton exportBtn = new JButton("Export");
         btnCustom(exportBtn);
         exportBtn.setBackground(new Color(0xD9D9D9));
+        exportBtn.addActionListener(e -> {
+            EditInventory.ExportInventory();
+        });
         controlPanel.add(exportBtn);
 
         
@@ -193,7 +238,14 @@ public class InventoryPanel extends JPanel {
 
         // Table Creation
         InventoryFileEditor.dataInitializer();
-        HashMap<Integer,Product> inventoryData = InventoryFileEditor.InventoryList;
+
+        HashMap<Integer, Product> inventoryData;
+        try {
+            inventoryData = EditInventory.readInventoryHashMap();
+        } catch (IOException e) {
+            inventoryData = new HashMap<>();
+            e.printStackTrace();
+        }
 
         // Data store
         String[] columns = {"Item","Type","Quantity","Code","Price"};
@@ -210,14 +262,14 @@ public class InventoryPanel extends JPanel {
             i++;
         }
 
-        DefaultTableModel model = new DefaultTableModel(data, columns);
-        JTable table = new JTable(model);
-        table.setFont(table.getFont().deriveFont(16f));
-        table.getTableHeader().setFont(table.getTableHeader().getFont().deriveFont(18f));
-        table.setRowHeight(30);
-        table.setFillsViewportHeight(true);
+        invModel = new DefaultTableModel(data,columns);
+        productTable = new JTable(invModel);
+        productTable.setFont(productTable.getFont().deriveFont(16f));
+        productTable.getTableHeader().setFont(productTable.getTableHeader().getFont().deriveFont(18f));
+        productTable.setRowHeight(30);
+        productTable.setFillsViewportHeight(true);
 
-        JScrollPane scroll = new JScrollPane(table);
+        JScrollPane scroll = new JScrollPane(productTable);
         scroll.setPreferredSize(new Dimension(1150, 450));
         tablePanel.add(scroll, new GridBagConstraints());
 
