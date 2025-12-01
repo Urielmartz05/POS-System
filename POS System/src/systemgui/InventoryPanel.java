@@ -13,18 +13,10 @@ import java.awt.Image;
 import java.io.IOException;
 import java.util.HashMap;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import Controller.Authentication;
 import GUIHelpers.TextPrompt;
@@ -40,7 +32,7 @@ public class InventoryPanel extends JPanel {
     public static JPanel InventoryPanel;
     public static DefaultTableModel invModel;
     public static JTable productTable;
-
+    private static JTextField searchInput;
     public InventoryPanel() {
         initComponents();
     }
@@ -151,10 +143,13 @@ public class InventoryPanel extends JPanel {
         mainTitlePanel.add(searchPanel);
 
         // Search Input
-        JTextField searchInput = new JTextField();
+        searchInput = new JTextField();
         searchInput.setPreferredSize(new Dimension(300, 30));
+        searchInput.addActionListener(e -> {
+            searchBar();
+        });
         searchPanel.add(searchInput);
-        new TextPrompt("Search product by name", searchInput);
+        new TextPrompt("Search product", searchInput);
 
         // Control Panel
         JPanel controlPanel = new JPanel();
@@ -274,6 +269,12 @@ public class InventoryPanel extends JPanel {
         tablePanel.add(scroll, new GridBagConstraints());
 
         add(InventoryPanel);
+    }
+    private void searchBar(){
+        DefaultTableModel obj = (DefaultTableModel)productTable.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(obj);
+        productTable.setRowSorter(sorter);
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" +searchInput.getText()));
     }
 
     private void btnCustom(JButton button){

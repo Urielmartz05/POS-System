@@ -12,15 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -247,8 +239,12 @@ public class PosGui extends JPanel {
             index++;
         }
 
-        model = new DefaultTableModel(product, columns);
-        
+        model = new DefaultTableModel(product, columns){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         table = new JTable(model);
         table.getTableHeader().setFont(table.getFont().deriveFont(20f));
         table.setRowHeight(30);
@@ -289,7 +285,11 @@ public class PosGui extends JPanel {
         JButton manualSearchBtn = new JButton("Search");
         btnCustom(manualSearchBtn);
         manualSearchBtn.setBackground(Color.WHITE);
+
         bottomLeftPanel.add(manualSearchBtn);
+        manualSearchBtn.addActionListener(e -> {
+            SalesWindows.searchProductGui();
+        });
 
         // Bottom Right Panel
         JPanel bottomRightPanel = new JPanel();
@@ -366,6 +366,38 @@ public class PosGui extends JPanel {
             }
         });
 
+        //keyboard actions
+        this.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), "Add");
+        this.getActionMap().put("Add", new AbstractAction() {
+                public void actionPerformed(ActionEvent e) {
+                    SalesWindows.addProductGui();
+
+                }
+        });
+        this.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "Delete");
+        this.getActionMap().put("Delete", new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                if (table.getSelectedRow() == -1) {
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Select a row to delete.",
+                            "Error message",
+                            JOptionPane.WARNING_MESSAGE
+                    );
+                }
+                else {
+                SalesLogic.deleteProduct();
+                }
+            }
+        });
+        this.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0), "Search");
+        this.getActionMap().put("Search", new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("pressed f4");
+                SalesWindows.searchProductGui();
+            }
+        });
+
         add(tableMainPanel);
     }
 
@@ -394,5 +426,6 @@ public class PosGui extends JPanel {
         label.setAlignmentX(RIGHT_ALIGNMENT);
         label.setFont(label.getFont().deriveFont(24f));
     }
+
 
 }
