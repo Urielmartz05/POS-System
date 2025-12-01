@@ -123,7 +123,7 @@ public class SalesLogic {
 
             // Get product code
             String productName = PosGui.table.getValueAt(row, 0).toString();
-            int productQuantity = Integer.parseInt(PosGui.table.getValueAt(row, 2).toString());
+            Float productQuantity = Float.valueOf(PosGui.table.getValueAt(row, 2).toString());
             
             // Search item to delete
             for (Product item : cart.keySet()) {
@@ -141,13 +141,14 @@ public class SalesLogic {
             amountSetter();
 
         }
-        
     }
 
     public static void deleteAllProducts(){
         cart.clear();
-        DefaultTableModel model = (DefaultTableModel) PosGui.table.getModel();
-        model.setRowCount(0);
+        if (PosGui.table != null) {
+            DefaultTableModel model = (DefaultTableModel) PosGui.table.getModel();
+            model.setRowCount(0);
+        }
 
         amountSetter();
 
@@ -157,15 +158,21 @@ public class SalesLogic {
 
         for (Product element : cart.keySet()) {
             subTotal += element.getPrice() * cart.get(element);
-            tax = (float) (subTotal * 0.16);
+
+            if (!element.getType().equals("Kg")) {
+                tax = (float) (subTotal * 0.16);
+            }
+
             total = subTotal + tax;
             pay = total;
         }
 
-        PosGui.subTotalAmount.setText(String.valueOf("$ " + subTotal));
-        PosGui.taxAmount.setText(String.valueOf("$ " + tax));
-        PosGui.totalAmount.setText(String.valueOf("$ " + total));
-        PosGui.payAmount.setText(String.valueOf("$ " + pay));
+        if (PosGui.subTotalAmount != null) {
+            PosGui.subTotalAmount.setText(String.valueOf("$ " + subTotal));
+            PosGui.taxAmount.setText(String.valueOf("$ " + tax));
+            PosGui.totalAmount.setText(String.valueOf("$ " + total));
+            PosGui.payAmount.setText(String.valueOf("$ " + pay));
+        }
         
         subTotal = 0;
         tax = 0;

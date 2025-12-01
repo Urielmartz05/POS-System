@@ -234,7 +234,7 @@ public class InventoryPanel extends JPanel {
         // Table Creation
         InventoryFileEditor.dataInitializer();
 
-        HashMap<Integer, Product> inventoryData;
+        HashMap<String, Product> inventoryData;
         try {
             inventoryData = EditInventory.readInventoryHashMap();
         } catch (IOException e) {
@@ -247,7 +247,7 @@ public class InventoryPanel extends JPanel {
         Object[][] data = new Object[inventoryData.size()][5];
 
         int i = 0;
-        for (Integer elem : inventoryData.keySet()) {
+        for (String elem : inventoryData.keySet()) {
             Product product = inventoryData.get(elem);
             data[i][0] = product.getItem();
             data[i][1] = product.getType();

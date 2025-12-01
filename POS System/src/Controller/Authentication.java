@@ -10,14 +10,17 @@ import java.util.HashMap;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import Model.Users;
 import main.View;
+import systemgui.CloseOperations;
 import systemgui.ControlPanel;
 import systemgui.LogIn;
+
 
 public class Authentication {
 
@@ -63,6 +66,16 @@ public class Authentication {
                 );
 
                 if (answer == JOptionPane.YES_OPTION) {
+
+                    SalesLogic.deleteAllProducts();
+
+                    if (CloseOperations.productsAmount != null) {
+                        CloseOperations.productsAmount.setText("0");
+                    }
+                    if (CloseOperations.salesAmount != null) {
+                        CloseOperations.salesAmount.setText("$ 0");
+                    }
+
                     View.superMainLayout.show(View.superMainPanel, "LogIn");
                     LogIn.emailInput.setText("");
                     LogIn.passwordInput.setText("");

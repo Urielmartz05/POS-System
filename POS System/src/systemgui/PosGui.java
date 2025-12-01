@@ -9,8 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 import javax.swing.*;
@@ -18,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import Controller.Authentication;
+import Controller.PrintData;
 import Controller.SalesLogic;
 import Model.Product;
 import main.View;
@@ -232,7 +232,7 @@ public class PosGui extends JPanel {
         int index = 0;
         for (Product elemt : cart.keySet()) {
             product[index][0] = elemt.getItem();
-            product[index][1] = elemt.getType();
+            product[index][1] = cart.get(elemt);
             product[index][2] = elemt.getQuantity();
             product[index][3] = elemt.getPrice();
             product[index][4] = elemt.getQuantity() * elemt.getPrice();
@@ -329,37 +329,41 @@ public class PosGui extends JPanel {
         payBtn.setForeground(Color.WHITE);
         bottomRightPanel.add(payBtn);
 
-        payBtn.addActionListener(e -> {
-
-            DefaultTableModel model = (DefaultTableModel) PosGui.table.getModel();
-
-            if (model.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(
-                    null, 
-                    "Nothing to pay!",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
-                );
-            }
-
-            else{
-
-                int answer = JOptionPane.showConfirmDialog(
-                null,
-                "Do you want to pay?",
-                "Payment",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE
-
-                );
-
-                if (answer == JOptionPane.YES_OPTION) {
-                    SalesLogic.inventoryModifier();
-                    SalesLogic.deleteAllProducts();
-                    JOptionPane.showMessageDialog(null, "Payment successfully completed!");
+        payBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DefaultTableModel model = (DefaultTableModel) PosGui.table.getModel();
+                
+                if (model.getRowCount() == 0) {
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Nothing to pay!",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+                
+                else{
+                    
+                    int answer = JOptionPane.showConfirmDialog(
+                            null,
+                            "Do you want to pay?",
+                            "Payment",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE
+                            
+                    );
+                    
+                    if (answer == JOptionPane.YES_OPTION) {
+                        SalesLogic.inventoryModifier();
+                        PrintData.printTicket();
+                        SalesLogic.deleteAllProducts();
+                        JOptionPane.showMessageDialog(null, "Payment successfully completed!");
+                        
+                        
+                    }
                 }
             }
-        
         });
 
         //keyboard actions

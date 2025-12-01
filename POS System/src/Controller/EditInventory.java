@@ -27,8 +27,9 @@ public class EditInventory {
     
     public static int itemSelectedRow;
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    private static HashMap<Integer,Product> inventoryList;
+    private static HashMap<String,Product> inventoryList;
     private static final String FILE_PATH = "POS System/src/Data/inventory.json";
+    
     public static void addNewItem(){
 
         try {
@@ -36,7 +37,7 @@ public class EditInventory {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        int code = Integer.parseInt(EditInventoryGuis.itemCodeInput.getText());
+        String code = EditInventoryGuis.itemCodeInput.getText();
         String name= EditInventoryGuis.itemNameInput.getText();
         Float quantity= Float.valueOf(EditInventoryGuis.itemQuantityInput.getText());
         Float price = Float.valueOf(EditInventoryGuis.itemPriceInput.getText());
@@ -66,7 +67,7 @@ public class EditInventory {
         int row = InventoryPanel.productTable.convertRowIndexToModel(itemSelectedRow);
         int codeColumnIndex = 3;
 
-        int code = Integer.parseInt(InventoryPanel.productTable.getValueAt(row, codeColumnIndex).toString());
+        String code = InventoryPanel.productTable.getValueAt(row, codeColumnIndex).toString();
 
         // Get data from EditInventoryGuis
         String itemName = EditInventoryGuis.itemNameInput.getText();
@@ -112,7 +113,7 @@ public class EditInventory {
             // Begin of delete data from Json
             int row = InventoryPanel.productTable.convertRowIndexToModel(selectedRow);
             int codeColumnIndex = 3;
-            int code = Integer.parseInt(InventoryPanel.productTable.getValueAt(row, codeColumnIndex).toString());
+            String code = InventoryPanel.productTable.getValueAt(row, codeColumnIndex).toString();
 
             // Read before delete data
             try {
@@ -164,11 +165,11 @@ public class EditInventory {
         if (response == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             try {
-                HashMap<Integer, Product> importedData;
+                HashMap<String, Product> importedData;
                 try (InputStream inputStream = new FileInputStream(selectedFile);
                      InputStreamReader reader = new InputStreamReader(inputStream)) {
 
-                    Type type = new TypeToken<HashMap<Integer, Product>>() {}.getType();
+                    Type type = new TypeToken<HashMap<String, Product>>() {}.getType();
                     importedData = gson.fromJson(reader, type);
                     if (importedData != null && !importedData.isEmpty()) {
                         if (inventoryList == null) {inventoryList = readInventoryHashMap();}
@@ -177,7 +178,7 @@ public class EditInventory {
                         DefaultTableModel model = (DefaultTableModel) InventoryPanel.productTable.getModel();
                         model.setRowCount(0);
 
-                        for (Integer key : inventoryList.keySet()) {
+                        for (String key : inventoryList.keySet()) {
                             Product p = inventoryList.get(key);
                             model.addRow(new Object[]{
                                     p.getItem(),
@@ -199,13 +200,13 @@ public class EditInventory {
         }
     }
 
-    public static HashMap<Integer, Product> readInventoryHashMap() throws IOException {
+    public static HashMap<String, Product> readInventoryHashMap() throws IOException {
         inventoryList = new HashMap<>();
         File file = new File(FILE_PATH);
         try (InputStream inputStream = new FileInputStream(file);
              InputStreamReader reader = new InputStreamReader(inputStream)) {
 
-            Type type = new TypeToken<HashMap<Integer, Product>>() {}.getType();
+            Type type = new TypeToken<HashMap<String, Product>>() {}.getType();
             inventoryList = gson.fromJson(reader, type);
 
             if(inventoryList == null) {
