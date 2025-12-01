@@ -21,7 +21,7 @@ public class EditUsers {
 
     public static int selectedRow;
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    private static HashMap<Integer, Users> usersList;
+    private static HashMap<String, Users> usersList;
 
     public static void addNewUser(){
 
@@ -29,7 +29,7 @@ public class EditUsers {
         usersList = readUserHashMap();
 
         // Get new User information
-        int code = Integer.parseInt(EditUsersGuis.codeInput.getText());
+        String code = EditUsersGuis.codeInput.getText();
         String name = EditUsersGuis.nameInput.getText();
         String role = (String) EditUsersGuis.roleBox.getSelectedItem();
         String password = new String(EditUsersGuis.passwordInput.getPassword());
@@ -59,7 +59,7 @@ public class EditUsers {
             int row = UsersTable.table.convertRowIndexToModel(selectedRow);
             int column = UsersTable.table.convertColumnIndexToModel(selectedColumn);
 
-            int code = Integer.parseInt(UsersTable.table.getValueAt(row, column).toString());
+            String code = UsersTable.table.getValueAt(row, column).toString();
 
             // Read before delete data
             usersList = readUserHashMap();
@@ -88,7 +88,7 @@ public class EditUsers {
         int column = UsersTable.table.convertColumnIndexToModel(selectedColumn);
 
         // Set data in input fields
-        int code = Integer.parseInt(UsersTable.table.getValueAt(row, column).toString());
+        String code = UsersTable.table.getValueAt(row, column).toString();
 
         // Get data from EditUserGui
         String userName = EditUsersGuis.nameInput.getText();
@@ -119,10 +119,10 @@ public class EditUsers {
 
     }
 
-    public static HashMap<Integer, Users> readUserHashMap(){
+    public static HashMap<String, Users> readUserHashMap(){
 
         try (InputStream inputStream = EditUsers.class.getResourceAsStream("/Data/data.json")) {
-            Type type = new TypeToken<HashMap<Integer, Users>>() {}.getType();
+            Type type = new TypeToken<HashMap<String, Users>>() {}.getType();
             InputStreamReader reader = new InputStreamReader(inputStream);
             usersList = gson.fromJson(reader, type);
 

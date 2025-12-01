@@ -71,7 +71,7 @@ public class EditInventoryGuis {
 
         // Get specific user information
         try {
-            HashMap<Integer, Product> inventoryList = EditInventory.readInventoryHashMap();
+            HashMap<String, Product> inventoryList = EditInventory.readInventoryHashMap();
 
 
             int selectedRow = InventoryPanel.productTable.getSelectedRow();
@@ -80,11 +80,11 @@ public class EditInventoryGuis {
             Object value = InventoryPanel.productTable.getModel().getValueAt(row, 3);
 
             // Set data in input fields
-            int itemCode = Integer.parseInt(value.toString());
+            String itemCode = value.toString();
             Product inv = inventoryList.get(itemCode);
 
             // Fill fields with user info
-            itemCodeInput.setText(String.valueOf(itemCode));
+            itemCodeInput.setText(itemCode);
             itemNameInput.setText(inv.getItem());
 
             // Show Edit User GUI

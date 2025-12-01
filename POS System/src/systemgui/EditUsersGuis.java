@@ -58,9 +58,9 @@ public class EditUsersGuis {
             }
 
             else {
-                HashMap<Integer, Users> usersList = EditUsers.readUserHashMap();
+                HashMap<String, Users> usersList = EditUsers.readUserHashMap();
 
-                if (usersList.containsKey(Integer.valueOf(code))) {
+                if (usersList.containsKey(code)) {
                     JOptionPane.showMessageDialog(null, "Code not available");
                     return;
                 }
@@ -77,18 +77,18 @@ public class EditUsersGuis {
         JPanel panel = editGui(false);
 
         // Get specific user information
-        HashMap<Integer, Users> usersList = EditUsers.readUserHashMap();
+        HashMap<String, Users> usersList = EditUsers.readUserHashMap();
         int selectedRow = UsersTable.table.getSelectedRow();
         int selectedColumn = 0;
         int row = UsersTable.table.convertRowIndexToModel(selectedRow);
         int column = UsersTable.table.convertColumnIndexToModel(selectedColumn);
 
         // Set data in input fields
-        int userCode = Integer.parseInt(UsersTable.table.getValueAt(row, column).toString());
+        String userCode = UsersTable.table.getValueAt(row, column).toString();
         Users user = usersList.get(userCode);
         
         // Fill fields with user info
-        codeInput.setText(String.valueOf(userCode));
+        codeInput.setText(userCode);
         nameInput.setText(user.getName());
 
         // Show Edit User GUI

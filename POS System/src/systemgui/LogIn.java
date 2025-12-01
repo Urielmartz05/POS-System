@@ -102,7 +102,7 @@ public class LogIn extends JPanel{
         emailInput = new JTextField();
         emailInput.setMaximumSize(new Dimension(300,30));
         emailInput.setFont(emailInput.getFont().deriveFont(16f));
-        TextPrompt emailPlaceholder = new TextPrompt("Email",emailInput);
+        TextPrompt emailPlaceholder = new TextPrompt("Code",emailInput);
         logPanel.add(emailInput);
 
         logPanel.add(Box.createVerticalStrut(8));

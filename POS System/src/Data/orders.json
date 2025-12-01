@@ -5,5 +5,187 @@
     "quantity": 1.0,
     "price": 10.0,
     "total": 10.0
+  },
+  {
+    "product": "banana",
+    "type": "Kg",
+    "quantity": 1.0,
+    "price": 10.0,
+    "total": 10.0
+  },
+  {
+    "product": "banana",
+    "type": "Kg",
+    "quantity": 3.0,
+    "price": 10.0,
+    "total": 30.0
+  },
+  {
+    "product": "Water",
+    "type": "Unit",
+    "quantity": 2.0,
+    "price": 5.0,
+    "total": 10.0
+  },
+  {
+    "product": "plutonium",
+    "type": "Unit",
+    "quantity": 5.0,
+    "price": 20.0,
+    "total": 100.0
+  },
+  {
+    "product": "Cereal",
+    "type": "Unit",
+    "quantity": 4.0,
+    "price": 5.0,
+    "total": 20.0
+  },
+  {
+    "product": "Cereal",
+    "type": "Unit",
+    "quantity": 1.0,
+    "price": 5.0,
+    "total": 5.0
+  },
+  {
+    "product": "Cereal",
+    "type": "Unit",
+    "quantity": 3.0,
+    "price": 5.0,
+    "total": 15.0
+  },
+  {
+    "product": "Water",
+    "type": "Unit",
+    "quantity": 2.0,
+    "price": 5.0,
+    "total": 10.0
+  },
+  {
+    "product": "banana",
+    "type": "Kg",
+    "quantity": 2.0,
+    "price": 10.0,
+    "total": 20.0
+  },
+  {
+    "product": "banana",
+    "type": "Kg",
+    "quantity": 2.0,
+    "price": 10.0,
+    "total": 20.0
+  },
+  {
+    "product": "plutonium",
+    "type": "Unit",
+    "quantity": 2.0,
+    "price": 20.0,
+    "total": 40.0
+  },
+  {
+    "product": "banana",
+    "type": "Kg",
+    "quantity": 3.0,
+    "price": 10.0,
+    "total": 30.0
+  },
+  {
+    "product": "Water",
+    "type": "Unit",
+    "quantity": 5.0,
+    "price": 5.0,
+    "total": 25.0
+  },
+  {
+    "product": "coca",
+    "type": "Unit",
+    "quantity": 2.0,
+    "price": 20.0,
+    "total": 40.0
+  },
+  {
+    "product": "Cereal",
+    "type": "Unit",
+    "quantity": 3.0,
+    "price": 5.0,
+    "total": 15.0
+  },
+  {
+    "product": "banana",
+    "type": "Kg",
+    "quantity": 2.0,
+    "price": 10.0,
+    "total": 20.0
+  },
+  {
+    "product": "coca",
+    "type": "Unit",
+    "quantity": 4.0,
+    "price": 20.0,
+    "total": 80.0
+  },
+  {
+    "product": "plutonium",
+    "type": "Unit",
+    "quantity": 4.0,
+    "price": 20.0,
+    "total": 80.0
+  },
+  {
+    "product": "Cereal",
+    "type": "Unit",
+    "quantity": 1.0,
+    "price": 5.0,
+    "total": 5.0
+  },
+  {
+    "product": "plutonium",
+    "type": "Unit",
+    "quantity": 2.0,
+    "price": 20.0,
+    "total": 40.0
+  },
+  {
+    "product": "coca",
+    "type": "Unit",
+    "quantity": 2.0,
+    "price": 20.0,
+    "total": 40.0
+  },
+  {
+    "product": "banana",
+    "type": "Kg",
+    "quantity": 2.0,
+    "price": 10.0,
+    "total": 20.0
+  },
+  {
+    "product": "banana",
+    "type": "Kg",
+    "quantity": 2.0,
+    "price": 10.0,
+    "total": 20.0
+  },
+  {
+    "product": "plutonium",
+    "type": "Unit",
+    "quantity": 2.0,
+    "price": 20.0,
+    "total": 40.0
+  },
+  {
+    "product": "coca",
+    "type": "Unit",
+    "quantity": 5.0,
+    "price": 20.0,
+    "total": 100.0
+  },
+  {
+    "product": "Cereal",
+    "type": "Unit",
+    "quantity": 3.0,
+    "price": 5.0,
+    "total": 15.0
   }
 ]
