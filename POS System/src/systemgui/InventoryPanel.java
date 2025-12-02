@@ -2,7 +2,6 @@ package systemgui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -13,19 +12,26 @@ import java.awt.Image;
 import java.io.IOException;
 import java.util.HashMap;
 
-import javax.swing.*;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 import Controller.Authentication;
+import Controller.EditInventory;
 import GUIHelpers.TextPrompt;
 import Logic.InventoryFileEditor;
 import Model.Product;
-
-import Logic.InventoryFileEditor;
-import Controller.EditInventory;
-import GUIHelpers.TextPrompt;
 
 public class InventoryPanel extends JPanel {
 
@@ -274,7 +280,7 @@ public class InventoryPanel extends JPanel {
         DefaultTableModel obj = (DefaultTableModel)productTable.getModel();
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(obj);
         productTable.setRowSorter(sorter);
-        sorter.setRowFilter(RowFilter.regexFilter("(?i)" +searchInput.getText()));
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchInput.getText()));
     }
 
     private void btnCustom(JButton button){

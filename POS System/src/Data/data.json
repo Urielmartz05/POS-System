@@ -4,19 +4,14 @@
     "name": "Maria",
     "role": "Admin"
   },
-  "123456789": {
-    "password": "dia",
+  "123": {
+    "password": ".",
     "name": "Pedro",
     "role": "User"
   },
   "4545": {
     "password": "paz",
     "name": "Juan",
-    "role": "Admin"
-  },
-  "987654321": {
-    "password": "xd",
-    "name": "Test",
     "role": "Admin"
   }
 }

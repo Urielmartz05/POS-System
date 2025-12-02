@@ -21,8 +21,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import Controller.Authentication;
 import Controller.EditUsers;
@@ -34,6 +36,8 @@ public class UsersTable extends JPanel{
 
     public static JTable table;
     public static DefaultTableModel model;
+
+    private static JTextField searchInput;
 
 
     public UsersTable(){
@@ -212,9 +216,13 @@ public class UsersTable extends JPanel{
         controlPanel.add(searchPanel);
 
         // Search Input
-        JTextField searchInput = new JTextField();
+        searchInput = new JTextField();
         searchInput.setPreferredSize(new Dimension(300, 30));
         searchPanel.add(searchInput);
+
+        searchInput.addActionListener(e -> {
+            userSorter();
+        });
 
         TextPrompt searchPanelPhl = new TextPrompt("Search user by name", searchInput);
 
@@ -257,10 +265,18 @@ public class UsersTable extends JPanel{
         add(tableMainPanel);
     }
 
-    private void btnCustom(JButton button){
+    private static void btnCustom(JButton button){
         button.setFont(button.getFont().deriveFont(18f));
         button.setFocusable(false);
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }
+
+    private static void userSorter(){
+        DefaultTableModel model = (DefaultTableModel) UsersTable.table.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        table.setRowSorter(sorter);
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchInput.getText()));
+
     }
     
 }

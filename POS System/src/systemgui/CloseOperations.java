@@ -5,9 +5,11 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.Writer;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,8 @@ public class CloseOperations {
 
     public static JLabel productsAmount;
     public static JLabel salesAmount;
+    public static JLabel totalKgLabel;
+    public static List<Order> ordersList;
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     public static void closeOperations(){
@@ -46,6 +50,14 @@ public class CloseOperations {
             JOptionPane.PLAIN_MESSAGE
         );
 
+        if (answer == JOptionPane.OK_OPTION) {
+            deleteData();
+
+            productsAmount.setText("$ 0");
+            totalKgLabel.setText("$ 0");
+            salesAmount.setText("$ 0");
+        }
+
         
     }
 
@@ -54,6 +66,7 @@ public class CloseOperations {
         List<Order> ordersList = new ArrayList<>();
         int totalProducts = 0;
         double totalSales = 0;
+        double kgAmount = 0;
 
         // Get data from orders Json
         try (InputStream inputStream = CloseOperations.class.getResourceAsStream("/Data/orders.json")) {
@@ -66,12 +79,22 @@ public class CloseOperations {
         }
 
         for (Order order : ordersList) {
-            totalProducts += order.getQuantity();
+            totalProducts += order.getQuantity();    
+            
+
+            if (order.getType().equals("Unit")) {
+                totalProducts += order.getQuantity();
+            }else{
+                kgAmount += order.getQuantity();
+            }
+            
             totalSales += order.getTotal();
         }
 
         productsAmount.setText(String.valueOf(totalProducts));
+        totalKgLabel.setText(String.valueOf(kgAmount));
         salesAmount.setText("$ " + String.valueOf(totalSales));
+        
     }
     
     
@@ -80,7 +103,7 @@ public class CloseOperations {
         // Base Panel
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
-        mainPanel.setPreferredSize(new Dimension(400, 200));
+        mainPanel.setPreferredSize(new Dimension(400, 250));
 
         // Sales summary
         JLabel salesSummary = new JLabel("Sales Summary");
@@ -113,6 +136,13 @@ public class CloseOperations {
 
         leftPanel.add(Box.createVerticalStrut(10));
 
+        // Total Kg
+        JLabel totalKg = new JLabel("Total Kg: ");
+        totalKg.setFont(totalKg.getFont().deriveFont(20f));
+        leftPanel.add(totalKg);
+
+        leftPanel.add(Box.createVerticalStrut(10));
+
         // Total Sales
         JLabel totalSales = new JLabel("Total Sales: ");
         totalSales.setFont(totalSales.getFont().deriveFont(20f));
@@ -125,6 +155,14 @@ public class CloseOperations {
         productsAmount.setFont(productsAmount.getFont().deriveFont(20f));
         productsAmount.setAlignmentX(Component.RIGHT_ALIGNMENT);
         rightPanel.add(productsAmount);
+
+        rightPanel.add(Box.createVerticalStrut(10));
+
+        // Total Kg amount
+        totalKgLabel = new JLabel("$ 0");
+        totalKgLabel.setFont(totalKgLabel.getFont().deriveFont(20f));
+        totalKgLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        rightPanel.add(totalKgLabel);
 
         rightPanel.add(Box.createVerticalStrut(10));
 
@@ -143,6 +181,29 @@ public class CloseOperations {
 
 
         return mainPanel;
+    }
+
+    private static void deleteData(){
+        
+        // Get data from orders Json
+        try (InputStream inputStream = CloseOperations.class.getResourceAsStream("/Data/orders.json")) {
+            Reader reader = new InputStreamReader(inputStream);
+            ordersList = gson.fromJson(reader, new TypeToken<List<Order>>(){}.getType());
+
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+
+        // Delete data from orders Json
+        ordersList.clear();
+
+        // Write data to orders Json
+        try (Writer writer = new FileWriter("POS System/src/Data/orders.json")) {
+            gson.toJson(ordersList, writer);
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+
     }
 
 
