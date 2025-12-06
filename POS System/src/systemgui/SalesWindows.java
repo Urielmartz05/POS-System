@@ -2,6 +2,7 @@ package systemgui;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.*;
@@ -17,7 +18,7 @@ public class SalesWindows {
 
     public static JTextField productCodeField;
     public static JTextField productQuantityField;
-
+    public static HashMap<Integer,Double> productStock = new HashMap<>();
     private static JPanel addProduct() {
         
         // Base Panel
