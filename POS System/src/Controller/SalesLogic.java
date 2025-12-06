@@ -49,7 +49,25 @@ public class SalesLogic {
             );
             return;
         }
-
+        if(!SalesWindows.productStock.containsKey(Integer.parseInt(productCode))){
+            SalesWindows.productStock.put(Integer.parseInt(productCode),Double.parseDouble(productQuantity.toString()));
+        }
+        else {
+            if ((SalesWindows.productStock.get(Integer.parseInt(productCode))+productQuantity)>inventory.get(Integer.parseInt(productCode)).getQuantity()){
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Product not available",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+            else{
+                double newQuantity= SalesWindows.productStock.get(Integer.parseInt(productCode))+productQuantity;
+                SalesWindows.productStock.put(Integer.parseInt(productCode),newQuantity);
+                System.out.println(SalesWindows.productStock.get(Integer.parseInt(productCode)));
+            }
+        }
         // Add product to cart
         Product product = inventory.get(Integer.parseInt(productCode));
         cart.put(product, productQuantity);
@@ -185,9 +203,8 @@ public class SalesLogic {
         
         HashMap<Integer, Product> inventory = new HashMap<>();
 
-        try (InputStream inputStream = SalesLogic.class.getResourceAsStream("/Data/inventory.json")) {
+        try (java.io.Reader reader = new java.io.FileReader("POS System/src/Data/inventory.json")) {
             Type type = new TypeToken<HashMap<Integer, Product>>() {}.getType();
-            InputStreamReader reader = new InputStreamReader(inputStream);
             inventory = new Gson().fromJson(reader, type);
         } catch (Exception e) {
             e.printStackTrace();

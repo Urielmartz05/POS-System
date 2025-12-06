@@ -360,7 +360,8 @@ public class PosGui extends JPanel {
                         PrintData.printTicket();
                         SalesLogic.deleteAllProducts();
                         JOptionPane.showMessageDialog(null, "Payment successfully completed!");
-                        
+                        SalesWindows.productStock.clear();
+                        System.out.println(SalesWindows.productStock.values());
                         
                     }
                 }
