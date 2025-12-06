@@ -2,13 +2,13 @@
   "1": {
     "item": "banana",
     "type": "Kg",
-    "quantity": 20.0,
+    "quantity": 17.0,
     "price": 10.0
   },
   "2": {
     "item": "Cereal",
     "type": "Unit",
-    "quantity": 13.0,
+    "quantity": 10.0,
     "price": 5.0
   },
   "3": {
@@ -20,14 +20,8 @@
   "4": {
     "item": "Water",
     "type": "Unit",
-    "quantity": 15.0,
+    "quantity": 13.0,
     "price": 5.0
-  },
-  "28": {
-    "item": "coca",
-    "type": "Unit",
-    "quantity": 7.0,
-    "price": 20.0
   },
   "87654": {
     "item": "Shampoo",
@@ -46,5 +40,11 @@
     "type": "Unit",
     "quantity": 20.0,
     "price": 5.0
+  },
+  "28": {
+    "item": "coca",
+    "type": "Unit",
+    "quantity": 4.0,
+    "price": 20.0
   }
 }
